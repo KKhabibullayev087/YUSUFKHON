@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yusufkhon Corporation — About Us</title>
+  <style>
+    :root {
+      --bg: #071029;
+      --card: rgba(255, 255, 255, 0.03);
+      --accent: #06b6d4;
+      --muted: #94a3b8;
+      --radius: 16px;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; text-decoration: none; margin: 0; padding: 0; }
+    
+    body { 
+      background: linear-gradient(180deg, #071029 0%, #07192b 60%); 
+      color: #e6eef6; 
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* HEADER & NAV */
+    header { 
+      background: #0a122a; 
+      padding: 15px 20px; 
+      position: sticky; 
+      top: 0; 
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav-container1 { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      max-width: 1200px; 
+      margin: 0 auto;
+      gap: 20px;
+      height: 80px;
+      padding-top: 10px;
+    }
+
+    .logo1 h2 { font-size: 20px; line-height: 1.2; color: white; }
+    .logo8 { font-size: 13px; color: var(--accent); letter-spacing: 1px; }
+
+    /* Search Box */
+    .search-container { flex: 1; max-width: 300px; }
+    .search-container input {
+      width: 100%; padding: 10px 15px; border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05);
+      color: white; outline: none;
+    }
+
+    /* TILNI ALMASHTIRISH */
+    .lang-switcher { display: flex; gap: 5px; }
+    .lang-btn {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: #fff; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 11px; transition: 0.3s;
+    }
+    .lang-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+
+    /* Hamburger Toggle */
+    .menu-toggle { display: flex; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1100; width: 30px; }
+    .menu-toggle span { display: block; height: 3px; width: 100%; background: var(--accent); border-radius: 3px; transition: 0.3s; }
+
+    /* Side Menu */
+    nav {
+      position: fixed; top: 0; right: -320px; width: 300px; height: 100vh;
+      background: #0a122a; padding: 70px 25px; transition: 0.4s;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5); z-index: 1050;
+    }
+    nav.active { right: 0; }
+    nav ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    nav ul li a { color: #e2e8f0; padding: 10px; display: block; border-radius: 8px; transition: 0.2s; }
+    nav ul li a:hover { background: rgba(6, 182, 212, 0.1); color: var(--accent); }
+
+    .sign { background-color: #f59e0b !important; color: #000 !important; text-align: center; font-weight: bold !important; }
+
+    /* CONTENT SECTIONS */
+    .container { max-width: 1100px; margin: 48px auto; padding: 0 20px; }
+    .hero { display: grid; grid-template-columns: 1fr 420px; gap: 32px; align-items: center; }
+    .brand { display: flex; gap: 16px; align-items: center; margin-bottom: 20px; }
+    .logo-box { width: 70px; height: 70px; border-radius: 12px; display: grid; place-items: center; background: linear-gradient(135deg, var(--accent), #7c3aed); font-size: 32px; }
+    h1 { font-size: 32px; margin-bottom: 8px; }
+    .tag { color: var(--muted); font-size: 16px; }
+    .lead { margin: 20px 0; line-height: 1.6; color: #dbeafe; font-size: 18px; }
+    .cta { display: flex; gap: 12px; margin-top: 20px; }
+    .btn { background: var(--accent); padding: 12px 24px; border-radius: 12px; color: #021025; font-weight: 700; border: none; cursor: pointer; }
+    .ghost { padding: 12px 24px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: var(--muted); cursor: pointer; }
+    .stats { display: flex; gap: 14px; margin-top: 30px; }
+    .stat { flex: 1; text-align: center; padding: 15px; border-radius: 12px; background: rgba(255,255,255,0.04); }
+    .stat strong { display: block; font-size: 24px; color: var(--accent); }
+    .hero-card { background: rgba(255,255,255,0.02); border-radius: var(--radius); padding: 25px; border: 1px solid rgba(255,255,255,0.05); }
+    .person { background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; display: flex; gap: 15px; align-items: center; margin-top: 15px; }
+    footer { margin-top: 60px; padding: 30px; color: var(--muted); text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+
+    @media (max-width: 600px) {
+      .search-container { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .stats { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-container1">
+    <div class="logo1">
+      <a href="./index.html">
+        <h2>YUSUFKHON</h2>
+        <div class="logo8">C O R P O R A T I O N</div>
+      </a>
+    </div>
+
+    <div class="lang-switcher">
+        <button class="lang-btn" id="lang-uz" onclick="changeLang('uz')">UZ</button>
+        <button class="lang-btn" id="lang-ru" onclick="changeLang('ru')">RU</button>
+        <button class="lang-btn" id="lang-en" onclick="changeLang('en')">EN</button>
+    </div>
+
+    <div class="search-container">
+      <input type="text" id="mainSearch" placeholder="Search...">
+    </div>
+
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span><span></span><span></span>
+    </div>
+
+    <nav id="menu">
+      <ul>
+        <li><a href="./index.html" data-lang-key="nav_home">Home</a></li>
+        <li><a href="./about.html" data-lang-key="nav_about">About Us</a></li>
+        <li><a href="./sevice.html" data-lang-key="nav_services">Services</a></li>
+        <li><a href="./fleet.html" data-lang-key="nav_fleet">Fleet</a></li>
+        <li><a href="https://carriercentral.amazon.com/">Amazon</a></li>
+        <li><a href="https://www.dat.com/">DAT</a></li>
+        <li><a href="./dispatcher.html" data-lang-key="nav_disp">Dispatcher</a></li>
+        <li><a href="./oquv.html" data-lang-key="nav_edu">Education</a></li>
+        <li><a href="./hisob.html" data-lang-key="nav_acc">Accounting</a></li>
+        <li><a class="sign" href="./signin.html" data-lang-key="nav_signin">Sign In</a></li>
+        <li><a href="tel:+8801284567" style="color:#06b6d4;" data-lang-key="nav_support">📞 Support</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <section class="hero">
+    <div id="contentArea">
+      <div class="brand">
+        <div class="logo-box">🚚</div>
+        <div>
+          <h1 data-lang-key="title_main">Yusufkhon Corporation</h1>
+          <div class="tag" data-lang-key="title_sub">Logistics & Delivery</div>
+        </div>
+      </div>
+      <p class="lead" data-lang-key="hero_lead">Fast, safe and reliable logistics solutions for your business growth.</p>
+      <div class="cta">
+        <button class="btn" id="contactBtn" data-lang-key="btn_contact">Contact Us</button>
+        <button class="ghost" onclick="location.href='./sevice.html'" data-lang-key="nav_services">Services</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong data-lang-key="stat_years">10+</strong><span data-lang-key="stat_years_label">Years</span></div>
+        <div class="stat"><strong data-lang-key="stat_del">1200+</strong><span data-lang-key="stat_del_label">Deliveries</span></div>
+        <div class="stat"><strong data-lang-key="stat_happy">98%</strong><span data-lang-key="stat_happy_label">Happy Clients</span></div>
+      </div>
+    </div>
+
+    <aside class="hero-card">
+      <h3 data-lang-key="team_title">Our Team</h3>
+      <div class="person">
+        <img src="https://picsum.photos/50" alt="CEO" style="border-radius: 8px;">
+        <div><strong data-lang-key="ceo_name">Bekzod</strong><br><small data-lang-key="ceo_pos">CEO</small></div>
+      </div>
+      <div class="person">
+        <img src="https://picsum.photos/51" alt="Manager" style="border-radius: 8px;">
+        <div><strong data-lang-key="mgr_name">Odina</strong><br><small data-lang-key="mgr_pos">Manager</small></div>
+      </div>
+    </aside>
+  </section>
+
+  <footer>
+    <span data-lang-key="footer_txt">© Yusufkhon Corporation — All rights reserved</span>
+  </footer>
+</div>
+
+<script>
+  // 1. MENU & SEARCH LOGIC
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("menu");
+  toggle.addEventListener("click", (e) => { e.stopPropagation(); menu.classList.toggle("active"); });
+  document.addEventListener('click', (e) => { if (!menu.contains(e.target) && !toggle.contains(e.target)) menu.classList.remove("active"); });
+
+  const searchInput = document.getElementById('mainSearch');
+  searchInput.addEventListener('input', function() {
+    const filter = this.value.toLowerCase();
+    const items = document.querySelectorAll('h1, p, .stat, .person');
+    items.forEach(el => { el.style.opacity = el.textContent.toLowerCase().includes(filter) ? "1" : "0.2"; });
+  });
+
+  // 2. TRANSLATIONS
+  const translations = {
+    uz: {
+      nav_home: "Bosh sahifa", nav_about: "Biz haqimizda", nav_services: "Xizmatlar", nav_fleet: "Parkimiz", nav_disp: "Dispetcher", nav_edu: "O'quv kursi", nav_acc: "Buxgalteriya", nav_signin: "Kirish", nav_support: "📞 Bog'lanish",
+      title_main: "Yusufkhon Corporation", title_sub: "Logistika va Yetkazib berish", hero_lead: "Sizning biznesingiz o'sishi uchun tezkor va ishonchli logistika yechimlari.",
+      btn_contact: "Biz bilan bog'lanish", stat_years_label: "Yil tajriba", stat_del_label: "Yetkazib berish", stat_happy_label: "Mijozlar mamnun",
+      team_title: "Bizning Jamoa", ceo_pos: "Bosh direktor", mgr_pos: "Menejer", footer_txt: "© Yusufkhon Corporation — Barcha huquqlar himoyalangan"
+    },
+    ru: {
+      nav_home: "Главная", nav_about: "О нас", nav_services: "Услуги", nav_fleet: "Автопарк", nav_disp: "Диспетчер", nav_edu: "Обучение", nav_acc: "Бухгалтерия", nav_signin: "Войти", nav_support: "📞 Поддержка",
+      title_main: "Yusufkhon Corporation", title_sub: "Логистика и доставка", hero_lead: "Быстрые и надежные логистические решения для вашего бизнеса.",
+      btn_contact: "Связаться с нами", stat_years_label: "Лет опыта", stat_del_label: "Доставок", stat_happy_label: "Довольных клиентов",
+      team_title: "Наша Команда", ceo_pos: "Генеральный директор", mgr_pos: "Менеджер", footer_txt: "© Yusufkhon Corporation — Все права защищены"
+    },
+    en: {
+      nav_home: "Home", nav_about: "About Us", nav_services: "Services", nav_fleet: "Fleet", nav_disp: "Dispatcher", nav_edu: "Education", nav_acc: "Accounting", nav_signin: "Sign In", nav_support: "📞 Support",
+      title_main: "Yusufkhon Corporation", title_sub: "Logistics & Delivery", hero_lead: "Fast, safe and reliable logistics solutions for your business growth.",
+      btn_contact: "Contact Us", stat_years_label: "Years", stat_del_label: "Deliveries", stat_happy_label: "Happy Clients",
+      team_title: "Our Team", ceo_pos: "CEO", mgr_pos: "Manager", footer_txt: "© Yusufkhon Corporation — All rights reserved"
+    }
+  };
+
+  function changeLang(lang) {
+    localStorage.setItem('selectedLang', lang);
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('lang-' + lang).classList.add('active');
+
+    document.querySelectorAll('[data-lang-key]').forEach(el => {
+      const key = el.getAttribute('data-lang-key');
+      if (translations[lang][key]) el.innerText = translations[lang][key];
+    });
+  }
+
+  // 3. AUTH CHECK
+  document.getElementById('contactBtn').addEventListener('click', () => {
+    if (!localStorage.getItem('isLoggedIn')) {
+        const curLang = localStorage.getItem('selectedLang') || 'uz';
+        const msg = curLang === 'uz' ? "Iltimos, oldin tizimga kiring!" : (curLang === 'ru' ? "Пожалуйста, сначала войдите!" : "Please sign in first!");
+        alert(msg);
+        window.location.href = './signin.html';
+    } else {
+        alert("Connecting to support...");
+    }
+  });
+
+  window.onload = () => { changeLang(localStorage.getItem('selectedLang') || 'uz'); };
+</script>
+</body>
+</html>

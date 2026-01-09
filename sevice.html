@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yusufkhon Corporation — Our Services</title>
+  <style>
+    :root {
+      --bg: #071029;
+      --card: rgba(255, 255, 255, 0.03);
+      --accent: #06b6d4;
+      --muted: #94a3b8;
+      --radius: 16px;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; text-decoration: none; margin: 0; padding: 0; }
+    
+    body { 
+      background: linear-gradient(180deg, #071029 0%, #07192b 60%); 
+      color: #e6eef6; 
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header { 
+      background: #0a122a; 
+      padding: 15px 20px; 
+      position: sticky; 
+      top: 0; 
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nav-container1 { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      height: 80px;
+      padding-top: 10px;
+    }
+
+    .logo1 h2 { font-size: 20px; line-height: 1.2; color: #fff; }
+    .logo8 { font-size: 13px; color: var(--accent); letter-spacing: 1px; }
+
+    /* TILNI ALMASHTIRISH TUGMALARI */
+    .lang-switcher { display: flex; gap: 8px; margin-right: 15px; }
+    .lang-btn {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: #fff; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 11px; transition: 0.3s;
+    }
+    .lang-btn.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: bold; }
+
+    .menu-toggle {
+      display: flex; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1100; width: 30px;
+    }
+    .menu-toggle span {
+      display: block; height: 3px; width: 100%; background: var(--accent); border-radius: 3px; transition: 0.3s;
+    }
+
+    nav {
+      position: fixed; top: 0; right: -320px; width: 300px; height: 100vh;
+      background: #0a122a; padding: 70px 25px; transition: 0.4s ease-in-out;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5); z-index: 1050;
+    }
+    nav.active { right: 0; }
+    nav ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    nav ul li a { color: #e2e8f0; padding: 12px; display: block; border-radius: 8px; transition: 0.3s; }
+    nav ul li a:hover { background: rgba(6, 182, 212, 0.1); color: var(--accent); }
+
+    .sign { background-color: #f59e0b !important; color: #000 !important; text-align: center; font-weight: bold; margin-top: 10px; }
+
+    .container { max-width: 1100px; margin: 48px auto; padding: 0 20px; }
+    h1 { font-size: 32px; margin-bottom: 8px; color: var(--accent); }
+    .lead { color: #dbeafe; max-width: 700px; line-height: 1.6; margin-bottom: 32px; font-size: 18px; }
+
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .service-card { 
+      background: rgba(255, 255, 255, 0.02); border-radius: var(--radius); padding: 24px; 
+      border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; 
+    }
+    .service-card:hover { transform: translateY(-8px); border-color: var(--accent); background: rgba(255, 255, 255, 0.04); }
+
+    .icon-box { 
+      width: 50px; height: 50px; border-radius: 12px; display: grid; place-items: center; 
+      background: linear-gradient(135deg, var(--accent), #7c3aed); font-size: 24px; margin-bottom: 16px; 
+    }
+
+    .cta { display: flex; gap: 12px; margin-top: 40px; }
+    .btn { background: var(--accent); padding: 14px 28px; border-radius: 12px; color: #071029; font-weight: 700; border: none; cursor: pointer; transition: 0.3s; }
+    .btn:hover { opacity: 0.9; transform: scale(1.02); }
+    .ghost { padding: 14px 28px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: var(--muted); cursor: pointer; transition: 0.3s; }
+    .ghost:hover { border-color: var(--accent); color: #fff; }
+
+    footer { margin-top: 60px; padding: 30px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); color: var(--muted); font-size: 14px; }
+
+    @media (max-width: 600px) {
+      .lang-switcher { margin-right: 10px; }
+      .cta { flex-direction: column; }
+      h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-container1">
+    <div class="logo1">
+      <a href="./index.html">
+        <h2>YUSUFKHON</h2>
+        <div class="logo8">C O R P O R A T I O N</div>
+      </a>
+    </div>
+
+    <div style="display: flex; align-items: center;">
+        <div class="lang-switcher">
+            <button class="lang-btn" id="lang-uz" onclick="changeLang('uz')">UZ</button>
+            <button class="lang-btn" id="lang-ru" onclick="changeLang('ru')">RU</button>
+            <button class="lang-btn" id="lang-en" onclick="changeLang('en')">EN</button>
+        </div>
+        
+        <div class="menu-toggle" id="menu-toggle">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <nav id="menu">
+      <ul>
+        <li><a href="./index.html" data-lang-key="nav_home">Home</a></li>
+        <li><a href="./about.html" data-lang-key="nav_about">About Us</a></li>
+        <li><a href="./sevice.html" data-lang-key="nav_services">Services</a></li>
+        <li><a href="./fleet.html" data-lang-key="nav_fleet">Fleet</a></li>
+        <li><a href="https://carriercentral.amazon.com/">Amazon</a></li>
+        <li><a href="https://www.dat.com/">DAT</a></li>
+        <li><a href="./dispatcher.html" data-lang-key="nav_disp">Dispatcher</a></li>
+        <li><a href="./oquv.html" data-lang-key="nav_edu">Education</a></li>
+        <li><a href="./hisob.html" data-lang-key="nav_acc">Accounting</a></li>
+        <li><a class="sign" href="./signin.html" data-lang-key="nav_signin">Sign In</a></li>
+        <li><a href="tel:+8801284567" style="color:#06b6d4;" data-lang-key="nav_support">📞 Support</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <h1 data-lang-key="srv_title">Our Services</h1>
+  <p class="lead" data-lang-key="srv_lead">Yusufkhon Corporation provides end-to-end logistics solutions for your business — with reliability, precision, and speed at every step.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="icon-box">🚚</div>
+      <h3 data-lang-key="srv1_h">Freight Transport</h3>
+      <p data-lang-key="srv1_p">We ensure safe and timely delivery across local and international routes. Transport modes are selected according to your cargo type.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="icon-box">🏭</div>
+      <h3 data-lang-key="srv2_h">Warehouse Services</h3>
+      <p data-lang-key="srv2_p">Our modern warehouses keep your goods in optimal conditions with temperature control and robust security.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="icon-box">🧭</div>
+      <h3 data-lang-key="srv3_h">Logistics Planning</h3>
+      <p data-lang-key="srv3_p">We analyze delivery flows and design logistics strategies that save time and reduce costs.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="icon-box">📦</div>
+      <h3 data-lang-key="srv4_h">Supply Chain</h3>
+      <p data-lang-key="srv4_p">We optimize connections between suppliers, manufacturers, and customers to increase efficiency.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="icon-box">⏱️</div>
+      <h3 data-lang-key="srv5_h">Express Delivery</h3>
+      <p data-lang-key="srv5_p">24/7 fast delivery for urgent shipments. Every minute matters to us.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="icon-box">🌍</div>
+      <h3 data-lang-key="srv6_h">International Shipping</h3>
+      <p data-lang-key="srv6_p">Through our global partner network, we deliver your cargo safely to destinations around the world.</p>
+    </div>
+  </div>
+
+  <div class="cta">
+    <button class="btn" id="orderBtn" data-lang-key="btn_order">Place an Order</button>
+    <button class="ghost" onclick="location.href='./about.html'" data-lang-key="btn_contact">Contact Us</button>
+  </div>
+
+  <footer>
+    <span data-lang-key="footer_txt">© Yusufkhon Corporation — Your trusted logistics partner</span>
+  </footer>
+</div>
+
+<script>
+  // 1. MENU LOGIKA
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("menu");
+  toggle.addEventListener("click", (e) => { 
+    e.stopPropagation(); 
+    menu.classList.toggle("active"); 
+  });
+  document.addEventListener('click', (e) => { 
+    if (!menu.contains(e.target) && !toggle.contains(e.target)) menu.classList.remove("active"); 
+  });
+
+  // 2. TARJIMALAR OBYEKTI
+  const translations = {
+    uz: {
+      nav_home: "Bosh sahifa", nav_about: "Biz haqimizda", nav_services: "Xizmatlar", nav_fleet: "Parkimiz", nav_disp: "Dispetcher", nav_edu: "O'quv kursi", nav_acc: "Buxgalteriya", nav_signin: "Kirish", nav_support: "📞 Bog'lanish",
+      srv_title: "Xizmatlarimiz",
+      srv_lead: "Yusufkhon Corporation biznesingiz uchun to'liq logistika yechimlarini taqdim etadi — har bir qadamda ishonchlilik va tezlik.",
+      srv1_h: "Yuk tashish",
+      srv1_p: "Mahalliy va xalqaro yo'nalishlarda xavfsiz va o'z vaqtida yetkazib berishni ta'minlaymiz.",
+      srv2_h: "Ombor xizmatlari",
+      srv2_p: "Zamonaviy omborlarimiz tovarlaringizni harorat nazorati va kuchli xavfsizlik bilan saqlaydi.",
+      srv3_h: "Logistika rejalashtirish",
+      srv3_p: "Yetkazib berish oqimlarini tahlil qilamiz va vaqtni tejaydigan strategiyalar tuzamiz.",
+      srv4_h: "Ta'minot zanjiri",
+      srv4_p: "Samaradorlikni oshirish uchun ishlab chiqaruvchi va mijoz o'rtasidagi bog'liqlikni optimallashtiramiz.",
+      srv5_h: "Tezkor yetkazib berish",
+      srv5_p: "Shoshilinch yuklar uchun 24/7 xizmat. Biz uchun har bir daqiqa muhim.",
+      srv6_h: "Xalqaro tashuvlar",
+      srv6_p: "Global hamkorlar tarmog'imiz orqali yuklarni dunyoning istalgan nuqtasiga yetkazamiz.",
+      btn_order: "Buyurtma berish",
+      btn_contact: "Bog'lanish",
+      footer_txt: "© Yusufkhon Corporation — Sizning ishonchli logistika hamkoringiz"
+    },
+    ru: {
+      nav_home: "Главная", nav_about: "О нас", nav_services: "Услуги", nav_fleet: "Автопарк", nav_disp: "Диспетчер", nav_edu: "Обучение", nav_acc: "Бухгалтерия", nav_signin: "Войти", nav_support: "📞 Поддержка",
+      srv_title: "Наши услуги",
+      srv_lead: "Yusufkhon Corporation предоставляет комплексные логистические решения для вашего бизнеса — надежность и скорость на каждом этапе.",
+      srv1_h: "Грузоперевозки",
+      srv1_p: "Обеспечиваем безопасную и своевременную доставку по местным и международным маршрутам.",
+      srv2_h: "Складские услуги",
+      srv2_p: "Наши современные склады сохранят ваши товары в оптимальных условиях с температурным контролем.",
+      srv3_h: "Планирование логистики",
+      srv3_p: "Мы анализируем потоки доставки и разрабатываем стратегии, экономящие время.",
+      srv4_h: "Цепочка поставок",
+      srv4_p: "Оптимизируем связи между производителями и клиентами для повышения эффективности.",
+      srv5_h: "Экспресс-доставка",
+      srv5_p: "Круглосуточная быстрая доставка для срочных грузов. Каждая минута важна для нас.",
+      srv6_h: "Международные перевозки",
+      srv6_p: "Через нашу глобальную партнерскую сеть мы доставим ваш груз в любую точку мира.",
+      btn_order: "Оформить заказ",
+      btn_contact: "Связаться",
+      footer_txt: "© Yusufkhon Corporation — Ваш надежный логистический партнер"
+    },
+    en: {
+      nav_home: "Home", nav_about: "About Us", nav_services: "Services", nav_fleet: "Fleet", nav_disp: "Dispatcher", nav_edu: "Education", nav_acc: "Accounting", nav_signin: "Sign In", nav_support: "📞 Support",
+      srv_title: "Our Services",
+      srv_lead: "Yusufkhon Corporation provides end-to-end logistics solutions for your business — with reliability, precision, and speed at every step.",
+      srv1_h: "Freight Transport",
+      srv1_p: "We ensure safe and timely delivery across local and international routes. Transport modes are selected according to your cargo type.",
+      srv2_h: "Warehouse Services",
+      srv2_p: "Our modern warehouses keep your goods in optimal conditions with temperature control and robust security.",
+      srv3_h: "Logistics Planning",
+      srv3_p: "We analyze delivery flows and design logistics strategies that save time and reduce costs.",
+      srv4_h: "Supply Chain",
+      srv4_p: "We optimize connections between suppliers, manufacturers, and customers to increase efficiency.",
+      srv5_h: "Express Delivery",
+      srv5_p: "24/7 fast delivery for urgent shipments. Every minute matters to us.",
+      srv6_h: "International Shipping",
+      srv6_p: "Through our global partner network, we deliver your cargo safely to destinations around the world.",
+      btn_order: "Place an Order",
+      btn_contact: "Contact Us",
+      footer_txt: "© Yusufkhon Corporation — Your trusted logistics partner"
+    }
+  };
+
+  // 3. TILNI O'ZGARTIRISH FUNKSIYASI
+  function changeLang(lang) {
+    localStorage.setItem('selectedLang', lang);
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('lang-' + lang).classList.add('active');
+
+    document.querySelectorAll('[data-lang-key]').forEach(el => {
+      const key = el.getAttribute('data-lang-key');
+      if (translations[lang][key]) {
+        el.innerText = translations[lang][key];
+      }
+    });
+  }
+
+  // 4. BUYURTMA BERISHDA TIZIMGA KIRISHNI TEKSHIRISH
+  document.getElementById('orderBtn').addEventListener('click', () => {
+    if (!localStorage.getItem('isLoggedIn')) {
+        const curLang = localStorage.getItem('selectedLang') || 'uz';
+        const msg = {
+            uz: "Iltimos, buyurtma berish uchun tizimga kiring!",
+            ru: "Пожалуйста, войдите в систему, чтобы оформить заказ!",
+            en: "Please sign in to place an order!"
+        };
+        alert(msg[curLang]);
+        window.location.href = './signin.html';
+    } else {
+        window.location.href = './get.html';
+    }
+  });
+
+  // 5. SAHIFA YUKLANIShI BILAN SAQLANGAN TILNI QO'LLASH
+  window.onload = () => { 
+    const savedLang = localStorage.getItem('selectedLang') || 'uz';
+    changeLang(savedLang); 
+  };
+</script>
+
+</body>
+</html>

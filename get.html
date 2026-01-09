@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Place an Order - Yusufkhon Corporation</title>
+  <style>
+    :root {
+      --bg: #071029;
+      --card-bg: rgba(255, 255, 255, 0.04);
+      --accent: #06b6d4;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --radius: 14px;
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; text-decoration: none; margin: 0; padding: 0; }
+
+    body {
+      background: linear-gradient(180deg, #071029 0%, #07192b 60%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* HEADER & NAV */
+    header { 
+      background: #0a122a; 
+      padding: 15px 20px; 
+      position: sticky; 
+      top: 0; 
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-container1 { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      height: 80px;
+      
+      padding-top: 10px;
+    }
+
+    .logo1 h2 { font-size: 20px; line-height: 1.2; color: #fff; }
+    .logo8 { font-size: 13px; color: var(--accent); letter-spacing: 1px; }
+
+    .menu-toggle {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1100;
+      width: 30px;
+    }
+    .menu-toggle span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 300px;
+      height: 100vh;
+      background: #0a122a;
+      padding: 80px 25px;
+      transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+      z-index: 1050;
+    }
+    nav.active { right: 0; }
+    nav ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    nav ul li a { color: #e2e8f0; padding: 12px; display: block; border-radius: 8px; transition: 0.3s; }
+    nav ul li a:hover { background: rgba(6, 182, 212, 0.1); color: var(--accent); }
+    .sign { background: #f59e0b !important; color: #000 !important; font-weight: bold; text-align: center; }
+
+    /* FORM SECTION */
+    .container {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    section {
+      width: 100%;
+      max-width: 800px;
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 { font-size: 32px; margin-bottom: 8px; color: #fff; text-align: center; }
+    p.description { color: var(--muted); margin-bottom: 30px; text-align: center; }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    label { display: flex; flex-direction: column; }
+    small { margin-bottom: 8px; color: var(--accent); font-weight: 600; font-size: 13px; text-transform: uppercase; }
+
+    input, select, textarea {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius);
+      padding: 14px;
+      color: #fff;
+      font-size: 15px;
+      transition: 0.3s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+    }
+
+    .full-width { grid-column: 1 / -1; }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      grid-column: 1 / -1;
+      margin: 10px 0;
+    }
+
+    .checkbox-row input { width: auto; cursor: pointer; }
+
+    .actions {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    button.btn {
+      width: 100%;
+      max-width: 300px;
+      background: linear-gradient(135deg, var(--accent), #3b82f6);
+      border: none;
+      color: #021020;
+      font-weight: 800;
+      padding: 16px 32px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    button.btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+    }
+
+    #formMsg { font-weight: 600; text-align: center; min-height: 20px; }
+
+    @media (max-width: 768px) {
+      form { grid-template-columns: 1fr; }
+      section { padding: 30px 20px; }
+      h2 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-container1">
+    <div class="logo1">
+      <a href="./index.html">
+        <h2>YUSUFKHON</h2>
+        <div class="logo8">C O R P O R A T I O N</div>
+      </a>
+    </div>
+
+    <div class="menu-toggle" id="menuToggle">
+      <span></span><span></span><span></span>
+    </div>
+
+    <nav id="menu">
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./about.html">About Us</a></li>
+                    <li><a href="./sevice.html">Services</a></li>
+                    <li><a href="./fleet.html">Fleet</a></li>
+                    <li><a href="https://carriercentral.amazon.com/">Amazon</a></li>
+                    <li><a href="https://www.dat.com/">DAT</a></li>
+                    <li><a href="./dispatcher.html">Dispatcher</a></li>
+                    <li><a href="./oquv.html">Education</a></li>
+                    <li><a href="./hisob.html">Buxgalteriya</a></li>
+                    <li><a class="sign" href="./signin.html">Sign In</a></li>
+                    <li><a href="tel:+8801284567" style="color:#06b6d4;">📞 +88 (80) 128-45-67</a></li>
+                </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <section>
+    <h2>Place an Order</h2>
+    <p class="description">Xizmatlarimizdan foydalanish uchun ma'lumotlaringizni qoldiring.</p>
+
+    <form id="orderForm">
+      <label>
+        <small>To'liq ism</small>
+        <input name="name" type="text" placeholder="Ism va familiya" required>
+      </label>
+
+      <label>
+        <small>Telefon / Email</small>
+        <input name="contact" type="text" placeholder="+998 90 123 45 67" required>
+      </label>
+
+      <label class="full-width">
+        <small>Xizmat turi</small>
+        <select name="service" required>
+          <option value="">Xizmatni tanlang</option>
+          <option>Freight Transport (Yuk tashish)</option>
+          <option>Warehouse Services (Omborxona)</option>
+          <option>Logistics Planning (Logistika)</option>
+          <option>Express Delivery (Tezkor yetkazish)</option>
+        </select>
+      </label>
+
+      <label>
+        <small>Pickup Address</small>
+        <input name="pickup" type="text" placeholder="Yuk olinadigan manzil" required>
+      </label>
+
+      <label>
+        <small>Delivery Address</small>
+        <input name="delivery" type="text" placeholder="Yetkazish manzili" required>
+      </label>
+
+      <label class="full-width">
+        <small>Pickup Date</small>
+        <input name="date" type="date" required>
+      </label>
+
+      <label class="full-width">
+        <small>Qo'shimcha izohlar</small>
+        <textarea name="notes" rows="3" placeholder="Masalan: yuk og'irligi, turi..."></textarea>
+      </label>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="agree" required>
+        <label for="agree" style="font-size: 14px; color: var(--muted); cursor:pointer;">Ma'lumotlar to'g'riligini tasdiqlayman.</label>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn" id="orderSubmit">Submit Order</button>
+        <div id="formMsg"></div>
+      </div>
+    </form>
+  </section>
+</div>
+
+<script>
+  // 1. Menu logic (O'z holicha qoldi)
+  const menuToggle = document.getElementById("menuToggle");
+  const menu = document.getElementById("menu");
+
+  if (menuToggle && menu) {
+    menuToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      menu.classList.toggle("active");
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target)) menu.classList.remove("active");
+    });
+  }
+
+  // 2. Form logic (Birlashtirilgan va xatosiz variant)
+  const orderForm = document.getElementById('orderForm');
+  const msg = document.getElementById('formMsg');
+  const submitBtn = document.getElementById('orderSubmit');
+
+  if (orderForm) {
+    orderForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // --- Tizimga kirganini tekshirish qismi ---
+      const userLoggedIn = localStorage.getItem('isLoggedIn');
+
+      if (!userLoggedIn) {
+        msg.style.color = '#f87171'; // Qizil rang
+        msg.innerHTML = 'Iltimos, buyurtma berishdan oldin ' + 
+            '<a href="./signin.html" style="color: #06b6d4; text-decoration: underline; font-weight: bold;">' +
+            'Tizimga kiring' +
+            '</a>.';
+        return; // Kodni shu yerda to'xtatadi
+      }
+      // ------------------------------------------
+
+      // Agar tizimga kirgan bo'lsa, quyidagi qism ishlaydi:
+      submitBtn.textContent = 'Yuborilmoqda...';
+      submitBtn.style.opacity = '0.7';
+      submitBtn.disabled = true;
+
+      const formData = new FormData(orderForm);
+      const data = Object.fromEntries(formData.entries());
+      console.log("Buyurtma ma'lumotlari:", data);
+
+      // Simulyatsiya (1.5 soniyadan keyin natija)
+      setTimeout(() => {
+        submitBtn.textContent = 'Submit Order';
+        submitBtn.style.opacity = '1';
+        submitBtn.disabled = false;
+        
+        orderForm.reset();
+        msg.style.color = '#22c55e'; // Yashil rang
+        msg.innerHTML = '✅ Buyurtmangiz qabul qilindi! Menejerlarimiz tez orada bog\'lanishadi.';
+        
+        setTimeout(() => msg.innerHTML = '', 6000);
+      }, 1500);
+    });
+  }
+</script>
+
+</body>
+</html>

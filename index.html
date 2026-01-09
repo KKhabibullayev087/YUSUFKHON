@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yusufkhon Corporation</title>
+  <link rel="icon" type="image/png" href="./image copy.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --accent: #06b6d4;
+      --bg-dark: #0a122a;
+      --card-bg: rgba(255, 255, 255, 0.04);
+      --text-gray: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Poppins", sans-serif; }
+    body { background: #070c1c; color: var(--text-gray); line-height: 1.6; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* HEADER */
+    header { 
+      background: var(--bg-dark); 
+      padding: 15px 20px; 
+      position: sticky; 
+      top: 0; 
+      z-index: 1000; 
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .nav-container { 
+      display: flex;  
+      align-items: center; 
+      justify-content: space-between;
+      max-width: 1200px; 
+      margin: 0 auto; 
+      height: 80px;
+      padding-top: 10px;
+    }
+
+    .logo h2 { font-size: 20px; line-height: 1; color: #fff; }
+    .logo8 { font-size: 12px; letter-spacing: 2px; color: var(--accent); }
+
+    .search-wrapper { margin: 0 15px; flex-grow: 1; max-width: 250px; }
+    .search-wrapper input {
+        width: 100%; padding: 8px 15px; border-radius: 20px;
+        border: 1px solid #1e293b; background: #0f172a; color: white; outline: none;
+    }
+
+    /* TILNI ALMASHTIRISH */
+    .lang-switcher { display: flex; gap: 5px; margin-right: 15px; }
+    .lang-btn {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; padding: 4px 8px; border-radius: 5px; cursor: pointer; font-size: 11px; transition: 0.3s;
+    }
+    .lang-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+
+    /* HAMBURGER */
+    .menu-toggle { display: flex; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1100; width: 30px; }
+    .menu-toggle span { display: block; height: 3px; width: 100%; background: var(--accent); border-radius: 3px; transition: 0.4s; }
+
+    /* SIDE MENU */
+    nav {
+      position: fixed; top: 0; right: -320px; width: 300px; height: 100vh;
+      background: var(--bg-dark); padding: 80px 30px; transition: 0.5s;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5); z-index: 1050;
+    }
+    nav.show { right: 0; }
+    nav ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    nav ul li a { font-size: 16px; padding: 12px 15px; display: block; border-radius: 8px; transition: 0.3s; }
+    nav ul li a:hover { background: rgba(6, 182, 212, 0.1); color: var(--accent); }
+
+    .menu-toggle.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    .sign { background-color: #f59e0b !important; color: #000 !important; font-weight: bold; text-align: center; }
+
+    /* HERO */
+    .hero { 
+        text-align: center; padding: 100px 20px; 
+        background: linear-gradient(rgba(7, 12, 28, 0.7), rgba(7, 12, 28, 0.7)), url('./image1.png');
+        background-position: center; background-size: cover; height: 45vh; 
+        display: flex; align-items: center; justify-content: center;
+    }
+    .btn1 { background: var(--accent); color: #000; padding: 14px 30px; border-radius: 50px; font-weight: 600; transition: 0.3s; cursor: pointer; border:none; display: inline-block;}
+    .btn1:hover { transform: scale(1.05); background: #22d3ee; }
+
+    /* SECTIONS */
+    section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
+    h2.section-title { text-align: center; font-size: 32px; margin-bottom: 40px; color: #fff; }
+
+    .service-boxes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+    .service { 
+        background: var(--card-bg); padding: 30px; border-radius: 15px; text-align: center; 
+        border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; 
+    }
+    .service:hover { transform: translateY(-10px); border-color: var(--accent); }
+
+    footer { text-align: center; padding: 40px; background: #050a18; border-top: 1px solid #1e293b; }
+
+    @media (max-width: 768px) {
+        .search-wrapper { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <div class="logo">
+      <a href="./index.html">
+        <h2>YUSUFKHON</h2>
+        <div class="logo8">C O R P O R A T I O N</div>
+      </a>
+    </div>
+
+    <div class="search-wrapper">
+        <input type="text" id="searchInput" onkeyup="searchServices()" placeholder="Qidirish...">
+    </div>
+
+    <div class="lang-switcher">
+        <button class="lang-btn" id="lang-uz" onclick="changeLang('uz')">UZ</button>
+        <button class="lang-btn" id="lang-ru" onclick="changeLang('ru')">RU</button>
+        <button class="lang-btn" id="lang-en" onclick="changeLang('en')">EN</button>
+    </div>
+
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span><span></span><span></span>
+    </div>
+
+    <nav id="menu">
+      <ul>
+        <li><a href="./index.html" data-lang-key="nav_home">Home</a></li>
+        <li><a href="./about.html" data-lang-key="nav_about">About Us</a></li>
+        <li><a href="./sevice.html" data-lang-key="nav_services">Services</a></li>
+        <li><a href="./fleet.html" data-lang-key="nav_fleet">Fleet</a></li>
+        <li><a href="https://carriercentral.amazon.com/">Amazon</a></li>
+        <li><a href="https://www.dat.com/">DAT</a></li>
+        <li><a href="./dispatcher.html" data-lang-key="nav_disp">Dispatcher</a></li>
+        <li><a href="./oquv.html" data-lang-key="nav_edu">Education</a></li>
+        <li><a href="./hisob.html" data-lang-key="nav_acc">Accounting</a></li>
+        <li><a class="sign" href="./signin.html" data-lang-key="nav_signin">Sign In</a></li>
+        <li><a href="tel:+8801284567" style="color:#06b6d4;" data-lang-key="nav_support">📞 +88 (80) 128-45-67</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <a href="./get.html" class="btn1" data-lang-key="btn_quote">GET A QUOTE</a>
+</section>
+
+<section id="services">
+  <h2 class="section-title" data-lang-key="title_services">OUR SERVICES</h2>
+  <div class="service-boxes" id="serviceBoxes">
+    <div class="service">
+      <img src="https://cdn-icons-png.flaticon.com/512/2897/2897808.png" width="60" alt="Warehouse">
+      <h3 data-lang-key="service_ware">WAREHOUSING</h3>
+      <p style="font-size: 14px; color: #a1a1aa;" data-lang-key="service_ware_p">Safe storage for your goods.</p>
+    </div>
+    <div class="service">
+      <img src="https://cdn-icons-png.flaticon.com/512/2897/2897780.png" width="60" alt="Shipping">
+      <h3 data-lang-key="service_ship">SHIPPING</h3>
+      <p style="font-size: 14px; color: #a1a1aa;" data-lang-key="service_ship_p">Global reach, local expertise.</p>
+    </div>
+    <div class="service">
+      <img src="https://cdn-icons-png.flaticon.com/512/2897/2897845.png" width="60" alt="Customs">
+      <h3 data-lang-key="service_cust">CUSTOMS</h3>
+      <p style="font-size: 14px; color: #a1a1aa;" data-lang-key="service_cust_p">Fast document processing.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="section-title" data-lang-key="contact_title">CONTACT US</h2>
+  <div class="service" style="max-width: 600px; margin: 0 auto; text-align: left;">
+    <form id="orderForm" class="contact-form" style="display: flex; flex-direction: column; gap: 15px;">
+      <input type="text" data-lang-key="placeholder_name" placeholder="Ismingiz" required style="padding: 12px; border-radius: 8px; border: 1px solid #1e293b; background: #0f172a; color: white;">
+      <textarea rows="4" data-lang-key="placeholder_msg" placeholder="Xabaringiz..." required style="padding: 12px; border-radius: 8px; border: 1px solid #1e293b; background: #0f172a; color: white;"></textarea>
+      <button type="submit" id="orderSubmit" class="btn1" data-lang-key="btn_send">XABARNI YUBORISH</button>
+      <div id="formMsg" style="text-align: center; margin-top: 10px; font-weight: bold;"></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Yusufkhon Corporation. All Rights Reserved.</p>
+</footer>
+
+<script>
+  // 1. MENU LOGIC
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('menu');
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menu.classList.toggle('show');
+    toggle.classList.toggle('active');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+        menu.classList.remove('show');
+        toggle.classList.remove('active');
+    }
+  });
+
+  // 2. TRANSLATIONS DATA
+  const translations = {
+    uz: {
+      nav_home: "Bosh sahifa", nav_about: "Biz haqimizda", nav_services: "Xizmatlar", nav_fleet: "Parkimiz", 
+      nav_disp: "Dispetcher", nav_edu: "O'quv kursi", nav_acc: "Buxgalteriya", nav_signin: "Kirish", nav_support: "📞 Bog'lanish",
+      btn_quote: "Buyurtma Berish", title_services: "BIZNING XIZMATLAR", service_ware: "OMBORKHONA", service_ware_p: "Yuklaringiz uchun xavfsiz saqlash.",
+      service_ship: "YUK TASHISH", service_ship_p: "Global miqyos, mahalliy tajriba.", service_cust: "BOJXONA", service_cust_p: "Hujjatlarni tezkor rasmiylashtirish.",
+      contact_title: "BOG'LANISH", placeholder_name: "Ismingiz", placeholder_msg: "Xabaringiz...", btn_send: "XABARNI YUBORISH"
+    },
+    ru: {
+      nav_home: "Главная", nav_about: "О нас", nav_services: "Услуги", nav_fleet: "Автопарк", 
+      nav_disp: "Диспетчер", nav_edu: "Обучение", nav_acc: "Бухгалтерия", nav_signin: "Войти", nav_support: "📞 Поддержка",
+      btn_quote: "Заказ", title_services: "НАШИ УСЛУГИ", service_ware: "СКЛАДИРОВАНИЕ", service_ware_p: "Безопасное хранение ваших товаров.",
+      service_ship: "ДОСТАВКА", service_ship_p: "Глобальный охват, местный опыт.", service_cust: "ТАМОЖНЯ", service_cust_p: "Быстрое оформление документов.",
+      contact_title: "СВЯЗАТЬСЯ", placeholder_name: "Ваше имя", placeholder_msg: "Ваше сообщение...", btn_send: "ОТПРАВИТЬ"
+    },
+    en: {
+      nav_home: "Home", nav_about: "About Us", nav_services: "Services", nav_fleet: "Fleet", 
+      nav_disp: "Dispatcher", nav_edu: "Education", nav_acc: "Accounting", nav_signin: "Sign In", nav_support: "📞 Support",
+      btn_quote: "Oredering", title_services: "OUR SERVICES", service_ware: "WAREHOUSING", service_ware_p: "Safe storage for your goods.",
+      service_ship: "SHIPPING", service_ship_p: "Global reach, local expertise.", service_cust: "CUSTOMS", service_cust_p: "Fast document processing.",
+      contact_title: "CONTACT US", placeholder_name: "Your Name", placeholder_msg: "Message...", btn_send: "SEND MESSAGE"
+    }
+  };
+
+  function changeLang(lang) {
+    localStorage.setItem('selectedLang', lang);
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('lang-' + lang).classList.add('active');
+
+    document.querySelectorAll('[data-lang-key]').forEach(el => {
+      const key = el.getAttribute('data-lang-key');
+      if (translations[lang][key]) {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = translations[lang][key];
+        else el.innerText = translations[lang][key];
+      }
+    });
+  }
+
+  // 3. ORDER LOGIC
+  const orderForm = document.getElementById('orderForm');
+  if (orderForm) {
+    orderForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const msg = document.getElementById('formMsg');
+      const submitBtn = document.getElementById('orderSubmit');
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      const curLang = localStorage.getItem('selectedLang') || 'uz';
+
+      if (!isLoggedIn) {
+        msg.style.color = '#f87171';
+        const linkTxt = curLang === 'uz' ? 'Tizimga kiring' : (curLang === 'ru' ? 'Войдите в систему' : 'Sign In');
+        const warnTxt = curLang === 'uz' ? 'Iltimos, oldin ' : (curLang === 'ru' ? 'Пожалуйста, сначала ' : 'Please, first ');
+        msg.innerHTML = warnTxt + `<a href="./signin.html" style="color:#06b6d4; text-decoration:underline;">${linkTxt}</a>`;
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = "...";
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerText = translations[curLang].btn_send;
+        msg.style.color = '#22c55e';
+        msg.innerText = "✅ Done!";
+        orderForm.reset();
+      }, 1500);
+    });
+  }
+
+  window.onload = () => {
+    changeLang(localStorage.getItem('selectedLang') || 'uz');
+  };
+
+  function searchServices() {
+    let input = document.getElementById('searchInput').value.toLowerCase();
+    let services = document.getElementsByClassName('service');
+    for (let i = 0; i < services.length; i++) {
+      let h3 = services[i].getElementsByTagName('h3')[0];
+      if(h3) services[i].style.display = h3.innerText.toLowerCase().includes(input) ? "block" : "none";
+    }
+  }
+</script>
+
+</body>
+</html>

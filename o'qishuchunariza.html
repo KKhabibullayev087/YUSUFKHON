@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yusufkhon Corporation - Registration</title>
+    <link rel="icon" type="image/png" href="./image copy.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #06b6d4;
+            --bg-dark: #070c1c;
+            --header-bg: #0a122a;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --text-gray: #e2e8f0;
+            --muted: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Poppins", sans-serif; }
+        body { 
+            background: var(--bg-dark); 
+            color: var(--text-gray); 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER */
+        header { 
+            background: var(--header-bg); 
+            padding: 15px 20px; 
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; width: 100%;height: 80px; padding-top: 10px;}
+        .logo h2 { font-size: 20px; color: #fff; line-height: 1; text-decoration: none; }
+        .logo8 { font-size: 12px; letter-spacing: 2px; color: var(--accent); }
+
+        /* LANG SWITCHER */
+        .lang-switcher { display: flex; gap: 5px; margin-right: 15px; }
+        .lang-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: #fff; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; transition: 0.3s;
+        }
+        .lang-btn.active { background: var(--accent); color: #000; font-weight: bold; border-color: var(--accent); }
+
+        /* FORM CONTAINER */
+        .registration-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .form-card h1 { font-size: 1.8rem; margin-bottom: 10px; text-align: center; color: #fff; }
+        .form-card p { text-align: center; color: var(--muted); margin-bottom: 30px; font-size: 0.9rem; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.85rem; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(15, 23, 42, 0.6); color: #fff; outline: none; transition: 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus { border-color: var(--accent); background: rgba(15, 23, 42, 0.9); }
+
+        .submit-btn {
+            width: 100%; padding: 14px; background: var(--accent); color: #070c1c; border: none;
+            border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 10px;
+        }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(6, 182, 212, 0.3); }
+
+        .back-link { display: block; text-align: center; margin-top: 20px; font-size: 0.85rem; color: var(--muted); text-decoration: none; }
+        .back-link:hover { color: var(--accent); }
+
+        footer { text-align: center; padding: 20px; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="./index.html" class="logo">
+                <h2>YUSUFKHON</h2>
+                <div class="logo8">CORPORATION</div>
+            </a>
+            <div style="display: flex; align-items: center;">
+                <div class="lang-switcher">
+                    <button class="lang-btn" id="lang-uz" onclick="changeLang('uz')">UZ</button>
+                    <button class="lang-btn" id="lang-ru" onclick="changeLang('ru')">RU</button>
+                    <button class="lang-btn" id="lang-en" onclick="changeLang('en')">EN</button>
+                </div>
+                <a href="./oquv.html" style="color: var(--accent); font-size: 0.9rem;" data-lang-key="back_nav">← Orqaga</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="registration-container">
+        <div class="form-card">
+            <h1 data-lang-key="reg_title">Ro'yxatdan O'tish</h1>
+            <p data-lang-key="reg_subtitle">Ma'lumotlaringizni qoldiring, biz siz bilan bog'lanamiz.</p>
+
+            <form id="regForm" onsubmit="handleRegistration(event)">
+                <div class="form-group">
+                    <label data-lang-key="lbl_fullname">F.I.SH.</label>
+                    <input type="text" id="fullName" placeholder="Ism va familiyangizni kiriting" data-lang-placeholder="ph_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label data-lang-key="lbl_phone">Telefon Raqamingiz</label>
+                    <input type="tel" id="phone" placeholder="+998 00 000 00 00" required>
+                </div>
+
+                <div class="form-group">
+                    <label data-lang-key="lbl_course">Tanlangan Kurs</label>
+                    <select id="courseSelect" required>
+                        <option value="Basic" data-lang-key="course_1">Asosiy Logistika</option>
+                        <option value="International" data-lang-key="course_2">Xalqaro Savdo</option>
+                        <option value="IT" data-lang-key="course_3">Logistikada IT</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Telegram User (@username)</label>
+                    <input type="text" id="telegram" placeholder="@user_name">
+                </div>
+
+                <button type="submit" class="submit-btn" data-lang-key="btn_send">ARIZA YUBORISH</button>
+            </form>
+            <a href="./oquv.html" class="back-link" data-lang-key="back_list">Kurslar ro'yxatiga qaytish</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Yusufkhon Corporation. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const translations = {
+            uz: {
+                back_nav: "← Orqaga",
+                reg_title: "Ro'yxatdan O'tish",
+                reg_subtitle: "Ma'lumotlaringizni qoldiring, biz siz bilan bog'lanamiz.",
+                lbl_fullname: "F.I.SH.",
+                ph_name: "Ism va familiyangizni kiriting",
+                lbl_phone: "Telefon Raqamingiz",
+                lbl_course: "Tanlangan Kurs",
+                course_1: "Asosiy Logistika",
+                course_2: "Xalqaro Savdo",
+                course_3: "Logistikada IT",
+                btn_send: "ARIZA YUBORISH",
+                back_list: "Kurslar ro'yxatiga qaytish",
+                success_msg: "Rahmat! Arizangiz qabul qilindi. Tez orada operatorlarimiz siz bilan bog'lanadi."
+            },
+            ru: {
+                back_nav: "← Назад",
+                reg_title: "Регистрация",
+                reg_subtitle: "Оставьте свои данные, и мы свяжемся с вами.",
+                lbl_fullname: "Ф.И.О.",
+                ph_name: "Введите имя и фамилию",
+                lbl_phone: "Ваш номер телефона",
+                lbl_course: "Выбранный курс",
+                course_1: "Базовая логистика",
+                course_2: "Международная торговля",
+                course_3: "IT в логистике",
+                btn_send: "ОТПРАВИТЬ ЗАЯВКУ",
+                back_list: "Вернуться к списку курсов",
+                success_msg: "Спасибо! Ваша заявка принята. Скоро наши операторы свяжутся с вами."
+            },
+            en: {
+                back_nav: "← Back",
+                reg_title: "Registration",
+                reg_subtitle: "Leave your information, we will contact you.",
+                lbl_fullname: "Full Name",
+                ph_name: "Enter your first and last name",
+                lbl_phone: "Your Phone Number",
+                lbl_course: "Selected Course",
+                course_1: "Basic Logistics",
+                course_2: "International Trade",
+                course_3: "IT in Logistics",
+                btn_send: "SEND APPLICATION",
+                back_list: "Back to course list",
+                success_msg: "Thank you! Your application has been accepted. Our operators will contact you soon."
+            }
+        };
+
+        function changeLang(lang) {
+            localStorage.setItem('selectedLang', lang);
+            updateUI(lang);
+        }
+
+        function updateUI(lang) {
+            // Button styles
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+
+            // Text content
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (translations[lang][key]) el.innerText = translations[lang][key];
+            });
+
+            // Placeholders
+            document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-lang-placeholder');
+                if (translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+        }
+
+        window.onload = function() {
+            // Load language
+            const savedLang = localStorage.getItem('selectedLang') || 'uz';
+            updateUI(savedLang);
+
+            // Check URL params for course
+            const urlParams = new URLSearchParams(window.location.search);
+            const course = urlParams.get('course');
+            if (course) {
+                document.getElementById('courseSelect').value = course;
+            }
+        };
+
+        function handleRegistration(event) {
+            event.preventDefault();
+            const lang = localStorage.getItem('selectedLang') || 'uz';
+            
+            // Simulation
+            alert(translations[lang].success_msg);
+            window.location.href = "./oquv.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistika Hisoboti - Yusufkhon Corporation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #071029;
+            --card: rgba(255, 255, 255, 0.04);
+            --accent: #06b6d4;
+            --text: #e5e7eb;
+            --muted: #94a3b8;
+            --radius: 14px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; text-decoration: none; }
+        body { 
+            background: linear-gradient(180deg, #071029 0%, #07192b 60%); 
+            color: var(--text); 
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* HEADER & NAV */
+        header.site-header { 
+            background: #0a122a; 
+            padding: 15px 20px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-container1 { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;height: 80px;padding-top: 10px; }
+        .logo1 h2 { font-size: 20px; color: #fff; }
+        .logo8 { font-size: 13px; color: var(--accent); letter-spacing: 1px; }
+
+        .menu-toggle { display: flex; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1100; width: 30px; }
+        .menu-toggle span { display: block; height: 3px; width: 100%; background: var(--accent); border-radius: 3px; }
+
+        nav#menu {
+            position: fixed; top: 0; right: -320px; width: 300px; height: 100vh;
+            background: #0a122a; padding: 70px 25px; transition: 0.4s ease-in-out;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5); z-index: 1050;
+        }
+        nav#menu.active { right: 0; }
+        nav ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        nav ul li a { color: #e2e8f0; font-size: 16px; padding: 10px; display: block; border-radius: 8px; }
+        nav ul li a:hover { background: rgba(6, 182, 212, 0.1); color: var(--accent); }
+        .sign { background: #f59e0b !important; color: #000 !important; font-weight: bold; text-align: center; }
+
+        /* ADMIN CONTENT */
+        .admin-container { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .admin-header { text-align: center; margin-bottom: 30px; }
+        .admin-header h1 { font-size: 28px; margin-bottom: 10px; }
+        
+        .transaction-form { 
+            background: var(--card); 
+            padding: 30px; 
+            border-radius: 20px; 
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+        }
+
+        h3 { color: var(--accent); margin: 20px 0 15px 0; font-size: 18px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
+
+        .form-group { display: flex; flex-direction: column; margin-bottom: 15px; }
+        .form-group label { font-size: 14px; margin-bottom: 6px; color: var(--muted); }
+        .form-group input { 
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px; border-radius: 10px; color: #fff; outline: none; transition: 0.3s;
+        }
+        .form-group input:focus { border-color: var(--accent); background: rgba(255,255,255,0.1); }
+
+        .submit-button {
+            width: 100%; background: linear-gradient(90deg, var(--accent), #3b82f6);
+            color: #071029; border: none; padding: 15px; border-radius: 12px;
+            font-weight: 700; cursor: pointer; margin-top: 20px; transition: 0.3s;
+        }
+        .submit-button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(6, 182, 212, 0.4); }
+
+        .message-box { 
+            margin-top: 20px; padding: 20px; border-radius: 12px; 
+            background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; color: #22c55e;
+            display: none; line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="nav-container1">
+            <div class="logo1">
+                <a href="./index.html">
+                    <h2>YUSUFKHON</h2>
+                    <div class="logo8">C O R P O R A T I O N</div>
+                </a>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </div>
+            <nav id="menu">
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./about.html">About Us</a></li>
+                    <li><a href="./sevice.html">Services</a></li>
+                    <li><a href="./fleet.html">Fleet</a></li>
+                    <li><a href="https://carriercentral.amazon.com/">Amazon</a></li>
+                    <li><a href="https://www.dat.com/">DAT</a></li>
+                    <li><a href="./dispatcher.html">Dispatcher</a></li>
+                    <li><a href="./oquv.html">Education</a></li>
+                    <li><a href="./hisob.html">Buxgalteriya</a></li>
+                    <li><a class="sign" href="./signin.html">Sign In</a></li>
+                    <li><a href="tel:+8801284567" style="color:#06b6d4;">📞 +88 (80) 128-45-67</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>📊 Buxgalteriya va Hisob</h1>
+            <p>Yuk tashish xarajatlarini hisoblash tizimi</p>
+        </header>
+
+        <form id="logistics-form" class="transaction-form">
+            <div class="form-group">
+                <label for="date">Sana:</label>
+                <input type="date" id="date" name="date" required value="2026-01-06">
+            </div>
+
+            <h3>📍 Yo'nalish</h3>
+            <div class="form-group">
+                <label for="origin">Yuklash manzili:</label>
+                <input type="text" id="origin" placeholder="Masalan: Toshkent" required>
+            </div>
+            <div class="form-group">
+                <label for="destination">Tushirish manzili:</label>
+                <input type="text" id="destination" placeholder="Masalan: Buxoro" required>
+            </div>
+            <div class="form-group">
+                <label for="distance">Masofa (Km):</label>
+                <input type="number" id="distance" placeholder="600" required>
+            </div>
+            
+            <h3>📦 Yuk va Tarif</h3>
+            <div class="form-group">
+                <label for="weight">Yuk og'irligi (Tonna):</label>
+                <input type="number" id="weight" step="0.1" placeholder="10" required>
+            </div>
+            <div class="form-group">
+                <label for="rate">1 Km uchun Tarif (So'm):</label>
+                <input type="number" id="rate" placeholder="3000" required>
+            </div>
+            
+            <button type="submit" class="submit-button">Hisoblash va Saqlash</button>
+            <div id="result-box" class="message-box"></div>
+        </form>
+    </div>
+
+    <script>
+        // Menu Toggle
+        const menuToggle = document.getElementById("menuToggle");
+        const menu = document.getElementById("menu");
+        menuToggle.addEventListener("click", (e) => {
+            e.stopPropagation();
+            menu.classList.toggle("active");
+        });
+        document.addEventListener('click', () => menu.classList.remove("active"));
+
+        // Calculation Logic
+        const form = document.getElementById('logistics-form');
+        const resultBox = document.getElementById('result-box');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const distance = parseFloat(document.getElementById('distance').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const rate = parseFloat(document.getElementById('rate').value);
+            const origin = document.getElementById('origin').value;
+            const dest = document.getElementById('destination').value;
+
+            // Umumiy hisob: Masofa * Tarif (vaznni ham inobatga olish mumkin)
+            const total = distance * rate;
+
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `
+                <strong>✅ Hisob-kitob tayyor:</strong><br>
+                Yo'nalish: ${origin} ➔ ${dest}<br>
+                Jami masofa: ${distance} km<br>
+                Yuk vazni: ${weight} tonna<br><br>
+                <span style="font-size: 1.2em;">Jami summa: <strong>${total.toLocaleString()} so'm</strong></span>
+            `;
+        });
+    </script>
+</body>
+</html>

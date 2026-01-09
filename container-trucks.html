@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Container Trucks - Heavy-Duty Freight Haulers</title>
+    
+    <style>
+        :root {
+            --charcoal: #34495e;     /* Asosiy to'q rang - kuch va ishonch */
+            --safety-orange: #e67e22; /* Ikkinchi darajali urg'u beruvchi rang - diqqat va xavfsizlik */
+            --light-bg: #ecf0f1;    /* Fon rangi */
+            --white: #ffffff;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            background-color: var(--white);
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 30px;
+            color: var(--charcoal);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05em;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--safety-orange);
+        }
+
+        h1 {
+            color: var(--charcoal);
+            font-size: 3.0em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            border-bottom: 4px solid var(--safety-orange);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--safety-orange);
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--safety-orange);
+            padding-left: 15px;
+        }
+
+        .truck-image {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 25px;
+            margin-bottom: 30px;
+            border: 2px solid var(--light-bg);
+        }
+
+        /* Xususiyatlar (Specs) jadvali */
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .specs-table th, .specs-table td {
+            padding: 18px 25px;
+            text-align: left;
+        }
+
+        .specs-table th {
+            background-color: var(--charcoal);
+            color: var(--white);
+            width: 35%;
+            font-weight: 600;
+        }
+
+        .specs-table td {
+            background-color: var(--white);
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .feature-box {
+            background-color: var(--safety-orange);
+            color: var(--white);
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 6px;
+        }
+
+        .feature-box h3 {
+            margin-top: 0;
+            color: var(--white);
+            font-size: 1.4em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <a href="index.html" class="back-link">
+            &#9664; Return to Fleet Selection
+        </a>
+
+        <h1>Container Trucks - Global Standard Haulage</h1>
+        
+        <img 
+            src="./image copy 4.png" 
+            alt="Heavy-Duty Container Truck" 
+            class="truck-image"
+        >
+
+        <h2>Reliable Intercity and Port Logistics</h2>
+        <p>
+            Our Container Trucks fleet is engineered for heavy-duty hauling, specializing in the efficient transport of standardized shipping containers. 
+            These powerful units are essential for moving cargo between ports, rail terminals, and intercity distribution centers, forming a critical link in the global supply chain.
+        </p>
+
+        <div class="feature-box">
+            <h3>Versatility and Power</h3>
+            <p>Designed to handle both 20-foot and 40-foot containers, our trucks ensure maximum flexibility and compatibility with all major shipping methods.</p>
+        </div>
+
+        <h2>Technical Specifications</h2>
+        <table class="specs-table">
+            <thead>
+                <tr>
+                    <th>Specification</th>
+                    <th>Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Supported Container Sizes</td>
+                    <td>20ft and 40ft (ISO Standard)</td>
+                </tr>
+                <tr>
+                    <td>Max Payload Capacity</td>
+                    <td>Up to 30 tons (Varies by model)</td>
+                </tr>
+                <tr>
+                    <td>Ideal Routes</td>
+                    <td>Highway, Port, and Intercity Long Haul</td>
+                </tr>
+                <tr>
+                    <td>Safety Features</td>
+                    <td>Advanced braking, Anti-rollover system, Container twist locks</td>
+                </tr>
+                <tr>
+                    <td>Tracking</td>
+                    <td>Real-time Telematics and GPS</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2>Security and Compliance</h2>
+        <p>
+            All container hauling operations comply with international safety standards. Our drivers are trained in secure container handling and weight distribution to guarantee the safe arrival of high-value and heavy goods.
+        </p>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education - Yusufkhon Corporation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #06b6d4;
+            --bg-dark: #070c1c;
+            --header-bg: #0a122a;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --text-gray: #e2e8f0;
+            --muted: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Poppins", sans-serif; }
+        body { background: var(--bg-dark); color: var(--text-gray); line-height: 1.6; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+
+        /* HEADER */
+        header { 
+            background: var(--header-bg); padding: 15px 20px; position: sticky; 
+            top: 0; z-index: 2000; border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; gap: 10px; height: 80px;padding-top: 10px;}
+        .logo h2 { font-size: 18px; color: #fff; line-height: 1; }
+        .logo8 { font-size: 11px; letter-spacing: 2px; color: var(--accent); }
+
+        /* TIL ALMASHTIRGICH */
+        .lang-switcher { display: flex; gap: 5px; background: rgba(255,255,255,0.03); padding: 4px; border-radius: 10px; }
+        .lang-btn {
+            background: transparent; border: none; color: var(--muted); padding: 6px 10px; 
+            border-radius: 7px; cursor: pointer; font-size: 11px; font-weight: 600; transition: 0.3s;
+        }
+        .lang-btn.active { background: var(--accent); color: #000; }
+
+        /* HAMBURGER */
+        .menu-toggle { display: flex; flex-direction: column; gap: 5px; cursor: pointer; z-index: 2100; width: 28px; }
+        .menu-toggle span { display: block; height: 3px; width: 100%; background: var(--accent); border-radius: 3px; transition: 0.4s; }
+
+        /* SIDE MENU */
+        nav {
+            position: fixed; top: 0; right: -320px; width: 300px; height: 100vh;
+            background: var(--header-bg); padding: 80px 30px; transition: 0.5s;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5); z-index: 2050;
+        }
+        nav.show { right: 0; }
+        nav ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        nav ul li a { font-size: 15px; padding: 10px 15px; display: block; border-radius: 8px; transition: 0.3s; }
+        nav ul li a:hover { background: rgba(6, 182, 212, 0.1); color: var(--accent); }
+        .sign { background-color: #f59e0b !important; color: #000 !important; font-weight: bold; text-align: center; }
+
+        /* FIXED SECTION */
+        .education-header { 
+            text-align: center; padding: 40px 20px; background: var(--bg-dark);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .education-header h1 { font-size: 2.2rem; color: #fff; margin-bottom: 10px; }
+        .education-header p { color: var(--muted); max-width: 600px; margin: 0 auto; font-size: 0.9rem; }
+
+        /* CONTENT */
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        
+        .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 60px; }
+        .course-card { 
+            background: var(--card-bg); padding: 30px; border-radius: 20px; 
+            border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; transition: 0.3s;
+        }
+        .course-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .course-card h3 { color: var(--accent); margin-bottom: 15px; }
+        .course-card p { font-size: 0.9rem; margin-bottom: 15px; }
+        .course-card ul { list-style: none; margin-bottom: 25px; color: var(--muted); font-size: 0.85rem; }
+        .course-card ul li { margin-bottom: 8px; }
+        .course-card ul li::before { content: '•'; color: var(--accent); margin-right: 10px; }
+
+        .enroll-button { 
+            background: var(--accent); color: #071029; padding: 12px; text-align: center; 
+            border-radius: 12px; font-weight: 600; margin-top: auto;
+        }
+
+        /* LUG'AT */
+        .resources { background: var(--card-bg); padding: 40px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05); }
+        .resources h2 { text-align: center; margin-bottom: 30px; color: #fff; }
+
+        .resource-item { 
+            background: rgba(255,255,255,0.03); padding: 18px 25px; border-radius: 12px; 
+            margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between; 
+            align-items: center; transition: 0.3s;
+        }
+        .resource-item:hover { background: rgba(6, 182, 212, 0.1); }
+        .resource-content { 
+            display: none; padding: 25px; background: rgba(0,0,0,0.3); 
+            border-radius: 0 0 15px 15px; border-left: 4px solid var(--accent); margin-bottom: 15px;
+        }
+        .resource-content h4 { color: var(--accent); margin-bottom: 5px; }
+
+        footer { text-align: center; padding: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+
+        @media (max-width: 768px) {
+            .nav-container { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "logo lang menu"; }
+            .logo { grid-area: logo; }
+            .lang-switcher { grid-area: lang; justify-self: center; }
+            .menu-toggle { grid-area: menu; justify-self: end; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="./index.html">
+                    <h2>YUSUFKHON</h2>
+                    <div class="logo8">C O R P O R A T I O N</div>
+                </a>
+            </div>
+
+            <div class="lang-switcher">
+                <button class="lang-btn" id="lang-uz" onclick="changeLang('uz')">UZ</button>
+                <button class="lang-btn" id="lang-ru" onclick="changeLang('ru')">RU</button>
+                <button class="lang-btn" id="lang-en" onclick="changeLang('en')">EN</button>
+            </div>
+
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span><span></span><span></span>
+            </div>
+
+            <nav id="menu">
+                <ul>
+                    <li><a href="./index.html" data-lang-key="nav_home">Home</a></li>
+                    <li><a href="./about.html" data-lang-key="nav_about">About Us</a></li>
+                    <li><a href="./sevice.html" data-lang-key="nav_services">Services</a></li>
+                    <li><a href="./fleet.html" data-lang-key="nav_fleet">Fleet</a></li>
+                    <li><a href="https://carriercentral.amazon.com/">Amazon</a></li>
+                    <li><a href="https://www.dat.com/">DAT</a></li>
+                    <li><a href="./dispatcher.html" data-lang-key="nav_disp">Dispatcher</a></li>
+                    <li><a href="./oquv.html" data-lang-key="nav_edu">Education</a></li>
+                    <li><a href="./hisob.html" data-lang-key="nav_acc">Accounting</a></li>
+                    <li><a class="sign" href="./signin.html" data-lang-key="nav_signin">Sign In</a></li>
+                    <li><a href="tel:+8801284567" style="color:var(--accent);" data-lang-key="nav_support">📞 Support</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="education-header">
+        <h1 data-lang-key="edu_title">Ta'lim va Rivojlanish Markazi</h1>
+        <p data-lang-key="edu_subtitle">Logistika sohasida yetakchi mutaxassis bo'lishingiz uchun professional kurslar.</p>
+    </section>
+
+    <div class="container">
+        <section class="courses-grid" id="coursesGrid"></section>
+
+        <section class="resources">
+            <h2 data-lang-key="dict_title">Logistika Terminlari Lug'ati</h2>
+            <div id="dictionaryList"></div>
+        </section>
+    </div>
+
+    <footer>
+        <p data-lang-key="footer_text">© 2026 Yusufkhon Corporation. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const translations = {
+            uz: {
+                nav_home: "Bosh sahifa", nav_about: "Biz haqimizda", nav_services: "Xizmatlar", nav_fleet: "Parkimiz", nav_disp: "Dispetcher", nav_edu: "O'quv kursi", nav_acc: "Buxgalteriya", nav_signin: "Kirish", nav_support: "Bog'lanish",
+                edu_title: "Ta'lim va Rivojlanish Markazi", edu_subtitle: "Logistika sohasida professional mutaxassis bo'lish uchun kurslar.",
+                dict_title: "Logistika Terminlari Lug'ati", enroll: "Ro'yxatdan o'tish", footer_text: "© 2026 Yusufkhon Corporation. Barcha huquqlar himoyalangan."
+            },
+            ru: {
+                nav_home: "Главная", nav_about: "О нас", nav_services: "Услуги", nav_fleet: "Автопарк", nav_disp: "Диспетчер", nav_edu: "Обучение", nav_acc: "Бухгалтерия", nav_signin: "Войти", nav_support: "Поддержка",
+                edu_title: "Центр Образования", edu_subtitle: "Профессиональные курсы для становления лидером в сфере логистики.",
+                dict_title: "Словарь Логистических Терминов", enroll: "Записаться", footer_text: "© 2026 Yusufkhon Corporation. Все права защищены."
+            },
+            en: {
+                nav_home: "Home", nav_about: "About Us", nav_services: "Services", nav_fleet: "Fleet", nav_disp: "Dispatcher", nav_edu: "Education", nav_acc: "Accounting", nav_signin: "Sign In", nav_support: "Support",
+                edu_title: "Education Center", edu_subtitle: "Professional courses to become a leading specialist in logistics.",
+                dict_title: "Logistics Glossary", enroll: "Enroll Now", footer_text: "© 2026 Yusufkhon Corporation. All Rights Reserved."
+            }
+        };
+
+        const courseData = [
+            {
+                uz: { title: "Asosiy Logistika", desc: "Logistika tamoyillari asoslari.", items: ["Ta'minot zanjiri", "Transport tahlili", "Inventar boshqaruvi"] },
+                ru: { title: "Основы Логистики", desc: "Базовый курс принципов логистики.", items: ["Цепочка поставок", "Анализ транспорта", "Управление запасами"] },
+                en: { title: "Basic Logistics", desc: "Introductory course on logistics principles.", items: ["Supply Chain Basics", "Transport Analysis", "Inventory Management"] }
+            },
+            {
+                uz: { title: "Xalqaro Savdo", desc: "Global savdo va bojxona qoidalari.", items: ["INCOTERMS 2020", "Bojxona hujjatlari", "Xalqaro shartnomalar"] },
+                ru: { title: "Международная Торговля", desc: "Глобальные правила и таможня.", items: ["INCOTERMS 2020", "Таможенные декларации", "Международные контракты"] },
+                en: { title: "International Trade", desc: "Global trade rules and customs procedures.", items: ["INCOTERMS 2020", "Customs Declarations", "International Contracts"] }
+            }
+        ];
+
+        const dictData = [
+            {
+                uz: { term: "Supply Chain", def: "Mahsulotni mijozga yetkazishdagi barcha jarayonlar." },
+                ru: { term: "Цепочка поставок", def: "Все процессы доставки продукта клиенту." },
+                en: { term: "Supply Chain", def: "All processes involved in delivering a product to the customer." }
+            },
+            {
+                uz: { term: "3PL", def: "Logistika xizmatlarini tashqi pudratchiga topshirish." },
+                ru: { term: "3PL", def: "Передача логистических услуг внешнему подрядчику." },
+                en: { term: "3PL", def: "Outsourcing logistics services to a third-party provider." }
+            }
+        ];
+
+        function changeLang(lang) {
+            localStorage.setItem('selectedLang', lang);
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+
+            // Static text
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (translations[lang][key]) el.innerText = translations[lang][key];
+            });
+
+            renderContent(lang);
+        }
+
+        function renderContent(lang) {
+            // Render Courses
+            const coursesGrid = document.getElementById('coursesGrid');
+            coursesGrid.innerHTML = courseData.map(c => `
+                <div class="course-card">
+                    <h3>${c[lang].title}</h3>
+                    <p>${c[lang].desc}</p>
+                    <ul>${c[lang].items.map(i => `<li>${i}</li>`).join('')}</ul>
+                    <a href="./o'qishuchunariza.html" class="enroll-button">${translations[lang].enroll}</a>
+                </div>
+            `).join('');
+
+            // Render Dictionary
+            const dictList = document.getElementById('dictionaryList');
+            dictList.innerHTML = dictData.map((d, index) => `
+                <div class="resource-item" onclick="toggleContent('dict${index}', this)">
+                    <span>${d[lang].term}</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div id="dict${index}" class="resource-content">
+                    <p>${d[lang].def}</p>
+                </div>
+            `).join('');
+        }
+
+        function toggleContent(id, element) {
+            const content = document.getElementById(id);
+            const icon = element.querySelector('.toggle-icon');
+            const isOpen = content.style.display === 'block';
+            content.style.display = isOpen ? 'none' : 'block';
+            icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+
+        // Hamburger Menu
+        const toggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+        toggle.onclick = (e) => {
+            e.stopPropagation();
+            menu.classList.toggle('show');
+            toggle.classList.toggle('active');
+        };
+
+        window.onload = () => changeLang(localStorage.getItem('selectedLang') || 'uz');
+    </script>
+</body>
+</html>

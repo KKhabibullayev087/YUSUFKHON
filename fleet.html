@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fleet — Yusufkhon Corporation</title>
+  <style>
+    :root {
+      --bg: #071029;
+      --header-bg: #0a122a;
+      --card: rgba(255, 255, 255, 0.03);
+      --accent: #06b6d4;
+      --muted: #94a3b8;
+      --radius: 16px;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; text-decoration: none; margin: 0; padding: 0; }
+    body { background: var(--bg); color: #e6eef6; min-height: 100vh; overflow-x: hidden; }
+
+    /* HEADER STYLE */
+    header { 
+      background: var(--header-bg); 
+      padding: 15px 20px; 
+      position: sticky; 
+      top: 0; 
+      z-index: 1000; 
+      border-bottom: 1px solid rgba(255,255,255,0.05); 
+    }
+    
+    .nav-container { 
+      display: flex; 
+      justify-content: space-between; 
+      padding-top: 30px;
+      max-width: 1200px; 
+      margin: 0 auto;
+      gap: 10px;
+      height: 115px;
+    }
+    
+    .logo1 h2 { font-size: 18px; line-height: 1.1; color: #fff; }
+    .logo8 { font-size: 11px; color: var(--accent); letter-spacing: 1px; }
+
+    /* TIL ALMASHTIRGICH - Markazda */
+    .lang-switcher { 
+      display: flex; 
+      gap: 5px; 
+      background: rgba(255,255,255,0.03);
+      padding: 4px;
+      border-radius: 10px;
+      height: 40px;
+    }
+    .lang-btn {
+      background: transparent; border: none;
+      color: var(--muted); padding: 6px 10px; border-radius: 7px; 
+      cursor: pointer; font-size: 11px; font-weight: 600; transition: 0.3s;
+      height: 30px;
+    }
+    .lang-btn.active { background: var(--accent); color: #000; }
+
+    /* QIDIRUV */
+    .search-container { flex: 1; max-width: 200px; }
+    .search-container input { 
+      width: 100%; 
+      padding: 8px ; 
+      border-radius: 20px; 
+      border: 1px solid rgba(255,255,255,0.1); 
+      background: rgba(255,255,255,0.05); 
+      color: white; 
+      outline: none;
+      font-size: 13px;
+    }
+
+    /* HAMBURGER */
+    .menu-toggle { display: flex; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1100; width: 28px; }
+    .menu-toggle span { display: block; height: 3px; width: 100%; background: var(--accent); border-radius: 3px; }
+
+    /* MENU */
+    nav { 
+      position: fixed; top: 0; right: -320px; width: 280px; height: 100vh; 
+      background: var(--header-bg); padding: 80px 25px; transition: 0.4s; 
+      z-index: 1050; box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    }
+    nav.active { right: 0; }
+    nav ul { list-style: none; display: flex; flex-direction: column; gap: 15px; }
+    nav ul li a { color: #e2e8f0; padding: 10px; font-size: 15px; display: block; }
+    .sign { background: #f59e0b !important; color: #000 !important; font-weight: bold; text-align: center; padding: 10px; border-radius: 8px; }
+
+    /* CONTENT */
+    .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+    .section-title { text-align: center; margin-bottom: 30px; }
+    .section-title h1 { font-size: 32px; color: var(--accent); margin-bottom: 10px; }
+
+    /* GRID */
+    .fleet-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .fleet-card { background: var(--card); border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: 0.3s; }
+    .fleet-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+    .fleet-img { width: 100%; height: 180px; background: #1e293b; display: grid; place-items: center; font-size: 60px; }
+    .fleet-info { padding: 15px; }
+    .fleet-info h3 { color: var(--accent); font-size: 20px; margin-bottom: 5px; }
+
+    /* DETAILS */
+    #details-page { display: none; }
+    .back-btn { display: inline-block; margin-bottom: 20px; color: var(--accent); cursor: pointer; border: 1px solid var(--accent); padding: 8px 15px; border-radius: 8px; }
+    .details-wrapper { display: flex; gap: 30px; flex-wrap: wrap; }
+    .details-img-box { flex: 1; min-width: 300px; height: 300px; background: var(--card); border-radius: 20px; display: grid; place-items: center; font-size: 100px; }
+    .details-content { flex: 1; min-width: 300px; }
+    .spec-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    .spec-table td { padding: 12px 5px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .btn-main { background: var(--accent); color: #000; padding: 15px 30px; border-radius: 12px; border: none; font-weight: bold; cursor: pointer; width: 100%; }
+
+    footer { text-align: center; padding: 40px; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px; }
+
+    /* MOBIL OPTIMALLASHTIRISH */
+    @media (max-width: 768px) {
+      .nav-container {
+        display: grid;
+        grid-template-columns: auto 1fr auto; 
+        grid-template-areas: 
+          "logo lang menu"
+          "search search search";
+        row-gap: 15px;
+      }
+      .logo1 { grid-area: logo; }
+      .lang-switcher { grid-area: lang; justify-self: center; }
+      .menu-toggle { grid-area: menu; justify-self: end; }
+      .search-container { grid-area: search; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <div class="logo1">
+      <a href="#" onclick="showListPage()">
+        <h2>YUSUFKHON</h2>
+        <div class="logo8">CORPORATION</div>
+      </a>
+    </div>
+
+    <div class="lang-switcher">
+      <button class="lang-btn" id="lang-uz" onclick="changeLang('uz')">UZ</button>
+      <button class="lang-btn" id="lang-ru" onclick="changeLang('ru')">RU</button>
+      <button class="lang-btn" id="lang-en" onclick="changeLang('en')">EN</button>
+    </div>
+
+    <div class="search-container">
+      <input type="text" id="fleetSearch" onkeyup="searchFleet()" placeholder="Qidirish...">
+    </div>
+
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span><span></span><span></span>
+    </div>
+
+    <nav id="menu">
+<ul id="nav-list">
+    <li><a href="./index.html" data-lang-key="nav_home">Home</a></li>
+    <li><a href="./about.html" data-lang-key="nav_about">About Us</a></li>
+    <li><a href="./sevice.html" data-lang-key="nav_services">Services</a></li>
+    <li><a href="./fleet.html" data-lang-key="nav_fleet">Fleet</a></li>
+    <li><a href="https://carriercentral.amazon.com/">Amazon</a></li>
+    <li><a href="https://www.dat.com/">DAT</a></li>
+    <li><a href="./dispatcher.html" data-lang-key="nav_disp">Dispatcher</a></li>
+    <li><a href="./oquv.html" data-lang-key="nav_edu">Education</a></li>
+    <li><a href="./hisob.html" data-lang-key="nav_acc">Buxgalteriya</a></li>
+    <li><a class="sign" href="./signin.html" data-lang-key="nav_signin">Sign In</a></li>
+    <li><a href="tel:+8801284567" style="color:#06b6d4;" data-lang-key="nav_support">📞 Support</a></li>
+</ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div id="list-page">
+    <div class="section-title">
+      <h1 data-lang-key="fleet_title">Bizning Parkimiz</h1>
+      <p data-lang-key="fleet_subtitle">Har qanday yuk uchun ishonchli transportlar.</p>
+    </div>
+    <div class="fleet-grid" id="fleetGrid"></div>
+  </div>
+
+  <div id="details-page">
+    <div class="back-btn" onclick="showListPage()" data-lang-key="btn_back">← Orqaga</div>
+    <div class="details-wrapper">
+      <div class="details-img-box" id="d-img"></div>
+      <div class="details-content">
+        <h1 id="d-title"></h1>
+        <p id="d-desc" style="color: #dbeafe; margin: 15px 0; line-height: 1.6;"></p>
+        <table class="spec-table">
+          <tr><td data-lang-key="spec_payload">Yuk ko'tarish:</td><td id="d-payload"></td></tr>
+          <tr><td data-lang-key="spec_engine">Dvigatel:</td><td id="d-engine"></td></tr>
+          <tr><td data-lang-key="spec_gps">GPS:</td><td data-lang-key="spec_available">Mavjud</td></tr>
+        </table>
+        <button class="btn-main" onclick="location.href='./get.html'" data-lang-key="btn_order">Buyurtma berish</button>
+      </div>
+    </div>
+  </div>
+
+  <footer><span data-lang-key="footer_text">© 2026 Yusufkhon Corporation</span></footer>
+</div>
+
+<script>
+  const translations = {
+    uz: {
+      nav_home: "Asosiy", nav_about: "Biz haqimizda", nav_services: "Xizmatlar", nav_fleet: "Parkimiz", nav_disp: "Dispetcher", nav_signin: "Kirish", nav_support: "Qo'llab-quvvatlash",
+      fleet_title: "Bizning Parkimiz", fleet_subtitle: "Har qanday yuk uchun ishonchli transportlar.",
+      btn_back: "← Orqaga", spec_payload: "Yuk ko'tarish:", spec_engine: "Dvigatel:", spec_gps: "GPS:", spec_available: "Mavjud (24/7)",
+      btn_order: "Buyurtma berish", footer_text: "© 2026 Yusufkhon Corporation — Logistika", search_placeholder: "Qidirish..."
+    },
+    ru: {
+      nav_home: "Главная", nav_about: "О нас", nav_services: "Услуги", nav_fleet: "Автопарk", nav_disp: "Диспетчер", nav_signin: "Войти", nav_support: "Поддержка",
+      fleet_title: "Наш Автопарк", fleet_subtitle: "Надежный транспорт для любого груза.",
+      btn_back: "← Назад", spec_payload: "Грузоподъемность:", spec_engine: "Двигатель:", spec_gps: "GPS:", spec_available: "Доступно (24/7)",
+      btn_order: "Заказать", footer_text: "© 2026 Yusufkhon Corporation — Логистика", search_placeholder: "Поиск..."
+    },
+    en: {
+      nav_home: "Home", nav_about: "About Us", nav_services: "Services", nav_fleet: "Fleet", nav_disp: "Dispatcher", nav_signin: "Sign In", nav_support: "Support",
+      fleet_title: "Our Fleet", fleet_subtitle: "Reliable transport for any cargo.",
+      btn_back: "← Back", spec_payload: "Payload:", spec_engine: "Engine:", spec_gps: "GPS:", spec_available: "Available (24/7)",
+      btn_order: "Order Now", footer_text: "© 2026 Yusufkhon Corporation — Logistics", search_placeholder: "Search..."
+    }
+  };
+
+  const fleetData = [
+    { id: 1, img: '🚛', uz_name: 'Og’ir yuk mashinasi', ru_name: 'Тяжелый грузовик', en_name: 'Heavy Truck', payload: '40 Ton', engine: '540 HP', uz_desc: 'Xalqaro yuk tashuvlari uchun.', ru_desc: 'Для международных перевозок.', en_desc: 'For international shipments.' },
+    { id: 2, img: '🚚', uz_name: 'O’rta Cargo Van', ru_name: 'Средний фургон', en_name: 'Medium Van', payload: '15 Ton', engine: '320 HP', uz_desc: 'Mintaqaviy yuklar uchun.', ru_desc: 'Для региональных грузов.', en_desc: 'For regional haulage.' },
+    { id: 3, img: '❄️', uz_name: 'Refrijerator', ru_name: 'Рефрижератор', en_name: 'Reefer Truck', payload: '20 Ton', engine: '400 HP', uz_desc: 'Sovutish tizimi bilan.', ru_desc: 'С охлаждением.', en_desc: 'With cooling system.' }
+  ];
+
+  function renderFleet() {
+    const lang = localStorage.getItem('selectedLang') || 'uz';
+    const grid = document.getElementById('fleetGrid');
+    grid.innerHTML = '';
+    fleetData.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'fleet-card';
+      card.onclick = () => showDetails(item);
+      card.innerHTML = `<div class="fleet-img">${item.img}</div><div class="fleet-info"><h3>${item[lang + '_name']}</h3><p>${item.payload}</p></div>`;
+      grid.appendChild(card);
+    });
+  }
+
+  function changeLang(lang) {
+    localStorage.setItem('selectedLang', lang);
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('lang-' + lang).classList.add('active');
+    document.getElementById('fleetSearch').placeholder = translations[lang].search_placeholder;
+    document.querySelectorAll('[data-lang-key]').forEach(el => {
+      const key = el.getAttribute('data-lang-key');
+      if (translations[lang][key]) el.innerText = translations[lang][key];
+    });
+    renderFleet();
+  }
+
+  function showDetails(item) {
+    const lang = localStorage.getItem('selectedLang') || 'uz';
+    document.getElementById('d-title').innerText = item[lang + '_name'];
+    document.getElementById('d-img').innerText = item.img;
+    document.getElementById('d-payload').innerText = item.payload;
+    document.getElementById('d-engine').innerText = item.engine;
+    document.getElementById('d-desc').innerText = item[lang + '_desc'];
+    document.getElementById('list-page').style.display = 'none';
+    document.getElementById('details-page').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+
+  function showListPage() {
+    document.getElementById('list-page').style.display = 'block';
+    document.getElementById('details-page').style.display = 'none';
+  }
+
+  document.getElementById('menu-toggle').onclick = (e) => {
+    e.stopPropagation();
+    document.getElementById('menu').classList.toggle('active');
+  };
+
+  function searchFleet() {
+    let input = document.getElementById('fleetSearch').value.toLowerCase();
+    let cards = document.getElementsByClassName('fleet-card');
+    for (let card of cards) {
+      card.style.display = card.innerText.toLowerCase().includes(input) ? "" : "none";
+    }
+  }
+
+  window.onload = () => changeLang(localStorage.getItem('selectedLang') || 'uz');
+</script>
+</body>
+</html>
