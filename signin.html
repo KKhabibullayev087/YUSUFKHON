@@ -1,257 +1,194 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yusufkhon Corporation - Auth</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --accent: #06b6d4;
-            --bg-dark: #070c1c;
-            --card-bg: #111827;
-            --input-bg: #161e2d;
-            --text-gray: #e2e8f0;
-            --muted: #94a3b8;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Poppins", sans-serif; }
-        
-        body { 
-            background: #070c1c;
-            color: var(--text-gray); 
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .auth-card {
-            background: var(--card-bg);
-            padding: 40px 30px;
-            border-radius: 35px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .logo-area { margin-bottom: 25px; }
-        .logo-area h2 { font-size: 24px; color: white; letter-spacing: 2px; text-transform: uppercase; }
-        .logo-area span { font-size: 10px; color: var(--accent); letter-spacing: 4px; display: block; margin-top: 5px; }
-
-        .tabs { display: flex; background: #0b1120; padding: 6px; border-radius: 18px; margin-bottom: 30px; }
-        .tab-btn { flex: 1; padding: 14px; border: none; background: transparent; color: var(--muted); cursor: pointer; font-weight: 600; border-radius: 14px; transition: 0.3s; }
-        .tab-btn.active { background: var(--accent); color: #070c1c; }
-
-        .auth-form { display: none; flex-direction: column; gap: 18px; text-align: left; }
-        .auth-form.active { display: flex; }
-
-        .input-group { display: flex; flex-direction: column; gap: 8px; }
-        .input-group label { font-size: 13px; color: var(--muted); margin-left: 5px; }
-        .input-group input { width: 100%; padding: 16px 20px; background: var(--input-bg); border: 1px solid #2d3748; border-radius: 15px; color: white; font-size: 15px; outline: none; transition: 0.3s; }
-        .input-group input:focus { border-color: var(--accent); }
-
-        .btn-submit { width: 100%; background: var(--accent); color: #070c1c; border: none; padding: 18px; border-radius: 18px; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 10px; text-transform: uppercase; transition: 0.3s; }
-        .btn-submit:disabled { background: #4b5563; cursor: not-allowed; opacity: 0.7; }
-        
-        #otp-area { display: none; border: 1px dashed var(--accent); padding: 15px; border-radius: 15px; margin-bottom: 10px; }
-        
-        .back-home { margin-top: 25px; display: block; color: var(--muted); text-decoration: none; font-size: 13px; text-align: center; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yusufkhon Corporation - Auth</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #06b6d4;
+      --bg-dark: #070c1c;
+      --card-bg: #111827;
+      --input-bg: #161e2d;
+      --text-gray: #e2e8f0;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Poppins", sans-serif; }
+    body { background: var(--bg-dark); color: var(--text-gray); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .auth-card { background: var(--card-bg); padding: 40px 30px; border-radius: 35px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); }
+    .logo-area h2 { font-size: 24px; color: white; letter-spacing: 2px; text-transform: uppercase; }
+    .logo-area span { font-size: 10px; color: var(--accent); letter-spacing: 4px; display: block; margin-bottom: 25px; }
+    .tabs { display: flex; background: #0b1120; padding: 6px; border-radius: 18px; margin-bottom: 30px; }
+    .tab-btn { flex: 1; padding: 14px; border: none; background: transparent; color: var(--muted); cursor: pointer; font-weight: 600; border-radius: 14px; transition: 0.3s; }
+    .tab-btn.active { background: var(--accent); color: #070c1c; }
+    .auth-form { display: none; flex-direction: column; gap: 18px; text-align: left; }
+    .auth-form.active { display: flex; }
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+    .input-group label { font-size: 13px; color: var(--muted); }
+    .input-group input { width: 100%; padding: 16px 20px; background: var(--input-bg); border: 1px solid #2d3748; border-radius: 15px; color: white; outline: none; transition: 0.3s; }
+    .input-group input:focus { border-color: var(--accent); }
+    .btn-submit { width: 100%; background: var(--accent); color: #070c1c; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+    .btn-submit:disabled { background: #4b5563; cursor: not-allowed; }
+    #otp-area { display: none; border: 1px dashed var(--accent); padding: 15px; border-radius: 15px; margin-top: 10px; }
+    .back-home { margin-top: 25px; display: block; color: var(--muted); text-decoration: none; font-size: 13px; }
+  </style>
 </head>
 <body>
 
-    <div class="auth-card">
-        <div class="logo-area">
-            <h2>YUSUFKHON</h2>
-            <span>C O R P O R A T I O N</span>
-        </div>
-
-        <div id="auth-container">
-            <div class="tabs">
-                <button class="tab-btn active" id="tab-login" onclick="toggleTab('login')">Kirish</button>
-                <button class="tab-btn" id="tab-signup" onclick="toggleTab('signup')">Ro'yxatdan o'tish</button>
-            </div>
-
-            <form id="login-form" class="auth-form active">
-                <div class="input-group">
-                    <label>Email</label>
-                    <input type="email" id="login-email" placeholder="mail@example.com" required>
-                </div>
-                <div class="input-group">
-                    <label>Parol</label>
-                    <input type="password" id="login-pass" placeholder="••••••••" required>
-                </div>
-                <button type="submit" class="btn-submit" id="login-btn">KIRISH</button>
-            </form>
-
-            <form id="signup-form" class="auth-form">
-                <div id="signup-fields">
-                    <div class="input-group">
-                        <label>To'liq ism</label>
-                        <input type="text" id="reg-name" placeholder="Azizbek">
-                    </div>
-                    <div class="input-group">
-                        <label>Email</label>
-                        <input type="email" id="reg-email" placeholder="mail@example.com">
-                    </div>
-                    <div class="input-group">
-                        <label>Yangi parol</label>
-                        <input type="password" id="reg-pass" placeholder="••••••••">
-                    </div>
-                </div>
-
-                <div id="otp-area">
-                    <div class="input-group">
-                        <label style="color: var(--accent);">Tasdiqlash kodi:</label>
-                        <input type="text" id="otp-code" placeholder="000000" maxlength="6">
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-submit" id="main-btn">RO'YXATDAN O'TISH</button>
-            </form>
-        </div>
-
-        <a href="index.html" class="back-home">← Bosh sahifaga qaytish</a>
+  <div class="auth-card">
+    <div class="logo-area">
+      <h2>YUSUFKHON</h2>
+      <span>C O R P O R A T I O N</span>
     </div>
 
-    <script>
-        const serverUrl = "https://yusufkhon.onrender.com"; // Slash o'chirildi
-        let isOtpSent = false;
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-login" onclick="toggleTab('login')">Kirish</button>
+      <button class="tab-btn" id="tab-signup" onclick="toggleTab('signup')">Ro'yxatdan o'tish</button>
+    </div>
 
-        function toggleTab(type) {
-            isOtpSent = false;
-            document.getElementById('otp-area').style.display = 'none';
-            document.getElementById('signup-fields').style.display = 'block';
-            document.getElementById('main-btn').innerText = "RO'YXATDAN O'TISH";
-            document.getElementById('main-btn').disabled = false;
+    <!-- Login form -->
+    <form id="login-form" class="auth-form active">
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="mail@example.com" required>
+      </div>
+      <div class="input-group">
+        <label>Parol</label>
+        <input type="password" id="login-pass" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn-submit" id="login-btn">Kirish</button>
+    </form>
 
-            if (type === 'login') {
-                document.getElementById('login-form').classList.add('active');
-                document.getElementById('signup-form').classList.remove('active');
-                document.getElementById('tab-login').classList.add('active');
-                document.getElementById('tab-signup').classList.remove('active');
-            } else {
-                document.getElementById('signup-form').classList.add('active');
-                document.getElementById('login-form').classList.remove('active');
-                document.getElementById('tab-signup').classList.add('active');
-                document.getElementById('tab-login').classList.remove('active');
-            }
-        }
+    <!-- Signup form -->
+    <form id="signup-form" class="auth-form">
+      <div id="signup-fields">
+        <div class="input-group">
+          <label>To'liq ism</label>
+          <input type="text" id="reg-name" placeholder="Ismingiz" required>
+        </div>
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" id="reg-email" placeholder="mail@example.com" required>
+        </div>
+        <div class="input-group">
+          <label>Yangi parol</label>
+          <input type="password" id="reg-pass" placeholder="••••••••" required>
+        </div>
+      </div>
 
-        // LOGIN
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('login-btn');
-            btn.disabled = true;
-            btn.innerText = "KIRILMOQDA...";
+      <div id="otp-area">
+        <div class="input-group">
+          <label style="color: var(--accent);">Emailga yuborilgan kod:</label>
+          <input type="text" id="otp-code" placeholder="000000" maxlength="6" required>
+        </div>
+      </div>
 
-            try {
-                const res = await fetch(`${serverUrl}/login`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        email: document.getElementById('login-email').value,
-                        password: document.getElementById('login-pass').value
-                    })
-                });
-                const data = await res.json();
-                if (res.ok) {
-                    alert("Xush kelibsiz!");
-                    localStorage.setItem('userToken', data.token);
-                    window.location.href = "index.html";
-                } else {
-                    alert(data.message);
-                }
-            } catch (err) {
-                alert("Serverga ulanib bo'lmadi. Server uyg'onishini kuting.");
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "KIRISH";
-            }
-        });
+      <button type="submit" class="btn-submit" id="main-btn">Ro'yxatdan o'tish</button>
+    </form>
 
-        // SIGNUP & OTP
-        document.getElementById('signup-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('main-btn');
-            
-            if (!isOtpSent) {
-                btn.disabled = true;
-                btn.innerText = "YUBORILMOQDA...";
-                try {
-                    const res = await fetch(`${serverUrl}/register`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            name: document.getElementById('reg-name').value,
-                            email: document.getElementById('reg-email').value,
-                            password: document.getElementById('reg-pass').value
-                        })
-                    });
-                    const data = await res.json();
-                    if (res.ok) {
-                        isOtpSent = true;
-                        document.getElementById('signup-fields').style.display = 'none';
-                        document.getElementById('otp-area').style.display = 'block';
-                        btn.innerText = "KODNI TASDIQLASH";
-                        alert("Emailga kod yuborildi!");
-                    } else {
-                        alert(data.message);
-                    }
-                } catch (err) {
-                    alert("Xatolik! Server uyg'onishi uchun 30 soniya kerak.");
-                } finally {
-                    btn.disabled = false;
-                }
-            } else {
-                btn.disabled = true;
-                btn.innerText = "TEKSHIRILMOQDA...";
-                try {
-                    const res = await fetch(`${serverUrl}/verify-otp`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            email: document.getElementById('reg-email').value,
-                            otp: document.getElementById('otp-code').value
-                        })
-                    });
-                    if (res.ok) {
-                        alert("Ro'yxatdan o'tdingiz! Endi kiring.");
-                        location.reload();
-                    } else {
-                        alert("Kod xato!");
-                    }
-                } catch (err) {
-                    alert("Xatolik yuz berdi.");
-                } finally {
-                    btn.disabled = false;
-                    btn.innerText = "KODNI TASDIQLASH";
-                }
-            }
-        });
-        // Signin.html ichidagi fetch qismi
-.then(res => res.json())
-.then(data => {
-    if(data.message === "Kod yuborildi") {
-        alert("Kod emailingizga yuborildi!");
-        // Bu yerda OTP oynasiga o'tish kodi bo'ladi
-    } else {
-        alert("Xato: " + data.message);
-        btn.disabled = false; // TUGMANI QAYTA YOQISH
-        btn.innerText = "Ro'yxatdan o'tish";
-    }
-})
-.catch(err => {
-    console.error(err);
-    btn.disabled = false; // TUGMANI QAYTA YOQISH
-    btn.innerText = "Ro'yxatdan o'tish";
+    <a href="index.html" class="back-home">← Bosh sahifaga qaytish</a>
+  </div>
+
+<script>
+const serverUrl = "https://yusufkhon.onrender.com";
+let isOtpSent = false;
+
+function toggleTab(type) {
+  isOtpSent = false;
+  document.getElementById('otp-area').style.display = 'none';
+  document.getElementById('signup-fields').style.display = 'block';
+  document.getElementById('main-btn').innerText = "Ro'yxatdan o'tish";
+  document.getElementById('login-form').classList.toggle('active', type === 'login');
+  document.getElementById('signup-form').classList.toggle('active', type === 'signup');
+  document.getElementById('tab-login').classList.toggle('active', type === 'login');
+  document.getElementById('tab-signup').classList.toggle('active', type === 'signup');
+}
+
+// LOGIN
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('login-btn');
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-pass').value;
+
+  btn.disabled = true;
+  btn.innerText = "Kirilmoqda...";
+
+  try {
+    const res = await fetch(`${serverUrl}/login`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    alert(data.message);
+    if (res.ok) window.location.href = "index.html";
+  } catch (err) {
+    alert("Server bilan aloqa yo'q!");
+  } finally {
+    btn.disabled = false;
+    btn.innerText = "Kirish";
+  }
 });
-    </script>
-</body>
-</html>
 
+// SIGNUP + OTP
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('main-btn');
+  const email = document.getElementById('reg-email').value;
+
+  if (!isOtpSent) {
+    const name = document.getElementById('reg-name').value;
+    const password = document.getElementById('reg-pass').value;
+    btn.disabled = true;
+    btn.innerText = "Yuborilmoqda...";
+
+    try {
+      const res = await fetch(`${serverUrl}/register`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ name, email, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        isOtpSent = true;
+        document.getElementById('signup-fields').style.display = 'none';
+        document.getElementById('otp-area').style.display = 'block';
+        btn.innerText = "Kod tasdiqlash";
+        alert("Kod yuborildi!");
+      } else {
+        alert(data.message);
+      }
+    } catch (err) {
+      alert("Xatolik: Server uyg'onmoqda, qayta urinib ko'ring.");
+    } finally {
+      btn.disabled = false;
+    }
+  } else {
+    const otp = document.getElementById('otp-code').value;
+    btn.disabled = true;
+    btn.innerText = "Tekshirilmoqda...";
+
+    try {
+      const res = await fetch(`${serverUrl}/verify-otp`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ email, otp })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert("Muvaffaqiyatli! Endi Kirish bo'limidan foydalaning.");
+        toggleTab('login');
+      } else {
+        alert(data.message);
+      }
+    } catch (err) {
+      alert("Tasdiqlashda xato!");
+    } finally {
+      btn.disabled = false;
+      btn.innerText = "Kod tasdiqlash";
+    }
+  }
+});
+</script>
