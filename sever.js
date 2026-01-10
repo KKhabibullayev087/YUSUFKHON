@@ -41,6 +41,8 @@ app.post('/register', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+const PORT = process.env.PORT || 10000; // Render beradigan portni oladi
+app.listen(PORT, () => {
+    console.log(`Server ${PORT}-portda tayyor`);
+});
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server ${PORT}-portda tayyor`));
