@@ -8,25 +8,30 @@ const app = express();
 app.use(cors()); 
 app.use(express.json());
 
-// Foydalanuvchilarni vaqtincha saqlash (Bazangiz bo'lmagani uchun)
 let tempStorage = {}; 
-let users = []; // Ro'yxatdan o'tganlar shu yerga tushadi
+let users = []; 
 
+// Nodemailer sozlamalarini yanada aniqroq qildik
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // SSL ishlatish
     auth: {
         user: 'xabibullayev.azizjon0608@gmail.com',
         pass: 'motprcendackubgi' 
-    }
+    },
+    // Ulanish vaqti tugashini oldini olish uchun
+    connectionTimeout: 10000 
 });
 
-// Asosiy sahifa (Server ishlashini tekshirish uchun)
 app.get('/', (req, res) => {
     res.send("<h1 style='color:blue; text-align:center;'>Yusufkhon Corporation Serveri muvaffaqiyatli ishga tushdi!</h1>");
 });
 
-// 1. RO'YXATDAN O'TISH (KOD YUBORISH)
+// 1. RO'YXATDAN O'TISH
 app.post('/register', async (req, res) => {
+    console.log("Yangi ro'yxatdan o'tish so'rovi keldi:", req.body.email);
+    
     const { email, name, password } = req.body;
     
     if(!email || !name || !password) {
@@ -37,45 +42,49 @@ app.post('/register', async (req, res) => {
     tempStorage[email] = { code, name, password };
 
     try {
+        // Xat yuborishni kutish vaqtini belgilaymiz
         await transporter.sendMail({
             from: '"Yusufkhon Corp" <xabibullayev.azizjon0608@gmail.com>',
             to: email,
             subject: 'Tasdiqlash kodi: ' + code,
             html: `
-                <div style="font-family: sans-serif; text-align: center; border: 1px solid #eee; padding: 20px;">
+                <div style="font-family: sans-serif; text-align: center; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
                     <h2 style="color: #06b6d4;">Yusufkhon Corporation</h2>
-                    <p>Sizning ro'yxatdan o'tish kodingiz:</p>
-                    <h1 style="letter-spacing: 5px; color: #333;">${code}</h1>
+                    <p>Sizning tasdiqlash kodingiz:</p>
+                    <h1 style="letter-spacing: 5px; color: #333; background: #f4f4f4; padding: 10px; display: inline-block;">${code}</h1>
+                    <p style="color: #888; font-size: 12px;">Agar bu so'rovni siz yubormagan bo'lsangiz, ushbu xatni e'tiborsiz qoldiring.</p>
                 </div>
             `
         });
+        
+        console.log("Email muvaffaqiyatli yuborildi:", email);
         res.status(200).json({ message: "Kod yuborildi" });
+
     } catch (error) {
-        console.error("Email xatosi:", error);
-        res.status(500).json({ message: "Email yuborishda xatolik yuz berdi" });
+        console.error("Email yuborishda xatolik yuz berdi:", error.message);
+        res.status(500).json({ message: "Email yuborishda xatolik: " + error.message });
     }
 });
 
-// 2. KODNI TASDIQLASH (OTP VERIFY)
+// 2. KODNI TASDIQLASH
 app.post('/verify-otp', (req, res) => {
     const { email, otp } = req.body;
     const userData = tempStorage[email];
 
     if (userData && userData.code == otp) {
-        // Kod to'g'ri bo'lsa, foydalanuvchini "baza"ga qo'shish
         users.push({
             name: userData.name,
             email: email,
             password: userData.password
         });
-        delete tempStorage[email]; // Vaqtincha xotiradan o'chirish
+        delete tempStorage[email];
         res.status(200).json({ message: "Muvaffaqiyatli tasdiqlandi!" });
     } else {
-        res.status(400).json({ message: "Tasdiqlash kodi xato!" });
+        res.status(400).json({ message: "Tasdiqlash kodi xato yoki muddati o'tgan!" });
     }
 });
 
-// 3. KIRISH (LOGIN)
+// 3. KIRISH
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
     const user = users.find(u => u.email === email && u.password === password);
@@ -83,7 +92,7 @@ app.post('/login', (req, res) => {
     if (user) {
         res.status(200).json({ 
             message: "Xush kelibsiz!", 
-            token: "fake-jwt-token-" + Math.random(),
+            token: "user-token-" + Date.now(),
             userName: user.name 
         });
     } else {
@@ -91,8 +100,7 @@ app.post('/login', (req, res) => {
     }
 });
 
-// --- SERVERNI ISHGA TUSHIRISH ---
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-    console.log(`Server ${PORT}-portda tayyor`);
+    console.log(`Server ${PORT}-portda tayyor va ishlamoqda...`);
 });
