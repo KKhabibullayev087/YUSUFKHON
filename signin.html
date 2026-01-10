@@ -28,8 +28,8 @@
     .input-group label { font-size: 13px; color: var(--muted); }
     .input-group input { width: 100%; padding: 16px 20px; background: var(--input-bg); border: 1px solid #2d3748; border-radius: 15px; color: white; outline: none; transition: 0.3s; }
     .input-group input:focus { border-color: var(--accent); }
-    .btn-submit { width: 100%; background: var(--accent); color: #070c1c; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-    .btn-submit:disabled { background: #4b5563; cursor: not-allowed; }
+    .btn-submit { width: 100%; background: var(--accent); color: #070c1c; border: none; padding: 18px; border-radius: 18px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s; margin-top: 10px; }
+    .btn-submit:disabled { background: #4b5563; cursor: not-allowed; opacity: 0.7; }
     #otp-area { display: none; border: 1px dashed var(--accent); padding: 15px; border-radius: 15px; margin-top: 10px; }
     .back-home { margin-top: 25px; display: block; color: var(--muted); text-decoration: none; font-size: 13px; }
   </style>
@@ -47,7 +47,6 @@
       <button class="tab-btn" id="tab-signup" onclick="toggleTab('signup')">Ro'yxatdan o'tish</button>
     </div>
 
-    <!-- Login form -->
     <form id="login-form" class="auth-form active">
       <div class="input-group">
         <label>Email</label>
@@ -60,27 +59,26 @@
       <button type="submit" class="btn-submit" id="login-btn">Kirish</button>
     </form>
 
-    <!-- Signup form -->
     <form id="signup-form" class="auth-form">
       <div id="signup-fields">
         <div class="input-group">
           <label>To'liq ism</label>
-          <input type="text" id="reg-name" placeholder="Ismingiz" required>
+          <input type="text" id="reg-name" placeholder="Ismingiz">
         </div>
         <div class="input-group">
           <label>Email</label>
-          <input type="email" id="reg-email" placeholder="mail@example.com" required>
+          <input type="email" id="reg-email" placeholder="mail@example.com">
         </div>
         <div class="input-group">
           <label>Yangi parol</label>
-          <input type="password" id="reg-pass" placeholder="••••••••" required>
+          <input type="password" id="reg-pass" placeholder="••••••••">
         </div>
       </div>
 
       <div id="otp-area">
         <div class="input-group">
           <label style="color: var(--accent);">Emailga yuborilgan kod:</label>
-          <input type="text" id="otp-code" placeholder="000000" maxlength="6" required>
+          <input type="text" id="otp-code" placeholder="000000" maxlength="6">
         </div>
       </div>
 
@@ -99,13 +97,17 @@ function toggleTab(type) {
   document.getElementById('otp-area').style.display = 'none';
   document.getElementById('signup-fields').style.display = 'block';
   document.getElementById('main-btn').innerText = "Ro'yxatdan o'tish";
+  
+  // Inputlarni tozalash
+  document.getElementById('otp-code').value = "";
+  
   document.getElementById('login-form').classList.toggle('active', type === 'login');
   document.getElementById('signup-form').classList.toggle('active', type === 'signup');
   document.getElementById('tab-login').classList.toggle('active', type === 'login');
   document.getElementById('tab-signup').classList.toggle('active', type === 'signup');
 }
 
-// LOGIN
+// --- LOGIN ---
 document.getElementById('login-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = document.getElementById('login-btn');
@@ -122,25 +124,37 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
       body: JSON.stringify({ email, password })
     });
     const data = await res.json();
-    alert(data.message);
-    if (res.ok) window.location.href = "index.html";
+    
+    if (res.ok) {
+      alert("Xush kelibsiz!");
+      window.location.href = "index.html";
+    } else {
+      alert(data.message || "Email yoki parol xato!");
+    }
   } catch (err) {
-    alert("Server bilan aloqa yo'q!");
+    alert("Server bilan aloqa yo'q! Render uyg'onayotgan bo'lishi mumkin.");
   } finally {
     btn.disabled = false;
     btn.innerText = "Kirish";
   }
 });
 
-// SIGNUP + OTP
+// --- SIGNUP + OTP ---
 document.getElementById('signup-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = document.getElementById('main-btn');
   const email = document.getElementById('reg-email').value;
 
   if (!isOtpSent) {
+    // 1-bosqich: Kod yuborish
     const name = document.getElementById('reg-name').value;
     const password = document.getElementById('reg-pass').value;
+
+    if(!name || !email || !password) {
+        alert("Iltimos, barcha maydonlarni to'ldiring!");
+        return;
+    }
+
     btn.disabled = true;
     btn.innerText = "Yuborilmoqda...";
 
@@ -151,22 +165,30 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
         body: JSON.stringify({ name, email, password })
       });
       const data = await res.json();
+      
       if (res.ok) {
         isOtpSent = true;
         document.getElementById('signup-fields').style.display = 'none';
         document.getElementById('otp-area').style.display = 'block';
-        btn.innerText = "Kod tasdiqlash";
-        alert("Kod yuborildi!");
+        btn.innerText = "Kodni tasdiqlash";
+        alert("Tasdiqlash kodi emailingizga yuborildi!");
       } else {
-        alert(data.message);
+        alert(data.message || "Xatolik yuz berdi");
       }
     } catch (err) {
-      alert("Xatolik: Server uyg'onmoqda, qayta urinib ko'ring.");
+      alert("Server ulanishda xato! Qayta urinib ko'ring.");
     } finally {
       btn.disabled = false;
     }
   } else {
+    // 2-bosqich: Kodni tekshirish
     const otp = document.getElementById('otp-code').value;
+    
+    if(!otp) {
+        alert("Kodni kiriting!");
+        return;
+    }
+
     btn.disabled = true;
     btn.innerText = "Tekshirilmoqda...";
 
@@ -177,18 +199,21 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
         body: JSON.stringify({ email, otp })
       });
       const data = await res.json();
+      
       if (res.ok) {
-        alert("Muvaffaqiyatli! Endi Kirish bo'limidan foydalaning.");
+        alert("Muvaffaqiyatli ro'yxatdan o'tdingiz! Endi kirishingiz mumkin.");
         toggleTab('login');
       } else {
-        alert(data.message);
+        alert(data.message || "Kod xato!");
       }
     } catch (err) {
-      alert("Tasdiqlashda xato!");
+      alert("Tasdiqlashda xato yuz berdi!");
     } finally {
       btn.disabled = false;
-      btn.innerText = "Kod tasdiqlash";
+      btn.innerText = "Kodni tasdiqlash";
     }
   }
 });
 </script>
+</body>
+</html>
