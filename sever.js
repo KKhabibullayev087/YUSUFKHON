@@ -3,82 +3,77 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 
 const app = express();
-
-// --- SOZLAMALAR ---
-app.use(cors()); 
+app.use(cors());
 app.use(express.json());
 
+// Vaqtinchalik xotira (demo uchun)
 let tempStorage = {}; 
 let users = []; 
 
-// Nodemailer sozlamalari - PORT 587 ga o'zgartirildi (Timeoutni oldini oladi)
+// Gmail transporter (App Password ishlatish shart!)
 const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // 587 port uchun shunday bo'lishi shart
-    auth: {
-        user: 'xabibullayev.azizjon0608@gmail.com',
-        pass: 'zydswmxoetzjompb' // Sizning yangi parolingiz
-    },
-    tls: {
-        rejectUnauthorized: false // Render tarmog'ida bloklanishni oldini oladi
-    }
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: 'xabibullayev.azizjon0608@gmail.com', // Gmail manzilingiz
+    pass: 'hqosofjwxkttjizt' // Gmail App Password (bo'sliqsiz yoziladi)
+  }
 });
 
+// Test route
 app.get('/', (req, res) => {
-    res.send("<h1 style='color:green; text-align:center;'>Yusufkhon Serveri ishlamoqda!</h1>");
+  res.send("<h1 style='color:green;text-align:center;'>Yusufkhon Serveri Tayyor!</h1>");
 });
 
-// 1. RO'YXATDAN O'TISH
+// 1. Ro'yxatdan o'tish (OTP yuborish)
 app.post('/register', async (req, res) => {
-    const { email, name, password } = req.body;
-    console.log("Ro'yxatdan o'tish so'rovi keldi:", email);
+  const { email, name, password } = req.body;
+  if (!email || !name || !password) {
+    return res.status(400).json({ message: "Barcha maydonlarni to'ldiring!" });
+  }
 
-    if(!email || !name || !password) {
-        return res.status(400).json({ message: "Barcha maydonlarni to'ldiring!" });
-    }
+  const code = Math.floor(100000 + Math.random() * 900000);
+  tempStorage[email] = { code, name, password };
 
-    const code = Math.floor(100000 + Math.random() * 900000);
-    tempStorage[email] = { code, name, password };
-
-    try {
-        await transporter.sendMail({
-            from: '"Yusufkhon Corp" <xabibullayev.azizjon0608@gmail.com>',
-            to: email,
-            subject: 'Tasdiqlash kodi: ' + code,
-            html: `
-                <div style="font-family: sans-serif; text-align: center; padding: 20px;">
-                    <h2 style="color: #06b6d4;">Yusufkhon Corporation</h2>
-                    <p>Sizning tasdiqlash kodingiz:</p>
-                    <h1 style="background: #eee; padding: 10px; display: inline-block;">${code}</h1>
-                </div>
-            `
-        });
-        
-        console.log("Xat muvaffaqiyatli yuborildi!");
-        res.status(200).json({ message: "Kod yuborildi" });
-
-    } catch (error) {
-        console.error("Xat yuborishda xato:", error.message);
-        res.status(500).json({ message: "Email yuborishda xatolik: " + error.message });
-    }
+  try {
+    await transporter.sendMail({
+      from: '"Yusufkhon Corp" <xabibullayev.azizjon0608@gmail.com>',
+      to: email,
+      subject: 'Tasdiqlash kodi',
+      html: `<h2>Kodingiz:</h2><h1 style="color:blue;">${code}</h1>`
+    });
+    res.json({ message: "Kod yuborildi!" });
+  } catch (err) {
+    res.status(500).json({ message: "Email yuborishda xato: " + err.message });
+  }
 });
 
-// 2. KODNI TASDIQLASH (OTP VERIFY)
+// 2. OTP tasdiqlash
 app.post('/verify-otp', (req, res) => {
-    const { email, otp } = req.body;
-    const userData = tempStorage[email];
+  const { email, otp } = req.body;
+  const userData = tempStorage[email];
 
-    if (userData && userData.code == otp) {
-        users.push({ name: userData.name, email, password: userData.password });
-        delete tempStorage[email];
-        res.status(200).json({ message: "Muvaffaqiyatli tasdiqlandi!" });
-    } else {
-        res.status(400).json({ message: "Tasdiqlash kodi xato!" });
-    }
+  if (userData && userData.code == otp) {
+    users.push({ name: userData.name, email, password: userData.password });
+    delete tempStorage[email];
+    res.json({ message: "Muvaffaqiyatli tasdiqlandi!" });
+  } else {
+    res.status(400).json({ message: "Kod xato!" });
+  }
 });
 
-const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => {
-    console.log(`Server ${PORT}-portda tayyor`);
+// 3. Login
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  const user = users.find(u => u.email === email && u.password === password);
+  if (user) {
+    res.json({ message: "Xush kelibsiz!", userName: user.name });
+  } else {
+    res.status(401).json({ message: "Email yoki parol xato!" });
+  }
 });
+
+// Render uchun port
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server ${PORT}-portda ishlayapti`));
