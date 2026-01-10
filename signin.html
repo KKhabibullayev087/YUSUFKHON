@@ -107,7 +107,7 @@
 
                 <div id="otp-area">
                     <div class="input-group">
-                        <label style="color: var(--accent);">Emailga yuborilgan 6 xonali kod:</label>
+                        <label style="color: var(--accent);">Tasdiqlash kodi:</label>
                         <input type="text" id="otp-code" placeholder="000000" maxlength="6">
                     </div>
                 </div>
@@ -120,17 +120,9 @@
     </div>
 
     <script>
-        const serverUrl = "https://yusufkhon.onrender.com";
+        const serverUrl = "https://yusufkhon.onrender.com"; // Slash o'chirildi
         let isOtpSent = false;
 
-        // Sahifa yuklanganda foydalanuvchi kirganligini tekshirish
-        window.onload = () => {
-            if (localStorage.getItem('userToken')) {
-                window.location.href = "index.html";
-            }
-        };
-
-        // Tablarni almashtirish funksiyasi
         function toggleTab(type) {
             isOtpSent = false;
             document.getElementById('otp-area').style.display = 'none';
@@ -151,13 +143,10 @@
             }
         }
 
-        // --- LOGIN MANTIQI ---
+        // LOGIN
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-pass').value;
             const btn = document.getElementById('login-btn');
-
             btn.disabled = true;
             btn.innerText = "KIRILMOQDA...";
 
@@ -165,90 +154,81 @@
                 const res = await fetch(`${serverUrl}/login`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({
+                        email: document.getElementById('login-email').value,
+                        password: document.getElementById('login-pass').value
+                    })
                 });
-                
                 const data = await res.json();
-
                 if (res.ok) {
-                    localStorage.setItem('userToken', data.token || 'logged_in');
+                    alert("Xush kelibsiz!");
+                    localStorage.setItem('userToken', data.token);
                     window.location.href = "index.html";
                 } else {
-                    alert(data.message || "Email yoki parol xato!");
-                    btn.disabled = false;
-                    btn.innerText = "KIRISH";
+                    alert(data.message);
                 }
             } catch (err) {
-                alert("Serverga ulanishda xato! Iltimos birozdan so'ng qayta urinib ko'ring.");
+                alert("Serverga ulanib bo'lmadi. Server uyg'onishini kuting.");
+            } finally {
                 btn.disabled = false;
                 btn.innerText = "KIRISH";
             }
         });
 
-        // --- RO'YXATDAN O'TISH VA OTP MANTIQI ---
+        // SIGNUP & OTP
         document.getElementById('signup-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const name = document.getElementById('reg-name').value;
-            const email = document.getElementById('reg-email').value;
-            const password = document.getElementById('reg-pass').value;
             const btn = document.getElementById('main-btn');
-
+            
             if (!isOtpSent) {
-                // 1. Emailga OTP yuborish bosqichi
                 btn.disabled = true;
                 btn.innerText = "YUBORILMOQDA...";
-
                 try {
                     const res = await fetch(`${serverUrl}/register`, {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ name, email, password })
+                        body: JSON.stringify({
+                            name: document.getElementById('reg-name').value,
+                            email: document.getElementById('reg-email').value,
+                            password: document.getElementById('reg-pass').value
+                        })
                     });
-
                     const data = await res.json();
-
                     if (res.ok) {
                         isOtpSent = true;
                         document.getElementById('signup-fields').style.display = 'none';
                         document.getElementById('otp-area').style.display = 'block';
                         btn.innerText = "KODNI TASDIQLASH";
-                        btn.disabled = false;
-                        alert("Emailingizga 6 xonali tasdiqlash kodi yuborildi!");
+                        alert("Emailga kod yuborildi!");
                     } else {
-                        alert(data.message || "Xatolik yuz berdi");
-                        btn.disabled = false;
-                        btn.innerText = "RO'YXATDAN O'TISH";
+                        alert(data.message);
                     }
                 } catch (err) {
-                    alert("Server uyquda yoki ulanishda xato. Iltimos 30 soniya kutib qayta bosing.");
+                    alert("Xatolik! Server uyg'onishi uchun 30 soniya kerak.");
+                } finally {
                     btn.disabled = false;
-                    btn.innerText = "RO'YXATDAN O'TISH";
                 }
             } else {
-                // 2. OTP kodni tasdiqlash bosqichi
-                const otp = document.getElementById('otp-code').value;
                 btn.disabled = true;
                 btn.innerText = "TEKSHIRILMOQDA...";
-
                 try {
                     const res = await fetch(`${serverUrl}/verify-otp`, {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ email, otp })
+                        body: JSON.stringify({
+                            email: document.getElementById('reg-email').value,
+                            otp: document.getElementById('otp-code').value
+                        })
                     });
-
                     if (res.ok) {
-                        alert("Muvaffaqiyatli ro'yxatdan o'tdingiz! Endi login orqali kiring.");
-                        // Avtomatik Kirish tabiga o'tkazish
-                        toggleTab('login');
-                        document.getElementById('login-email').value = email;
+                        alert("Ro'yxatdan o'tdingiz! Endi kiring.");
+                        location.reload();
                     } else {
-                        alert("Tasdiqlash kodi xato!");
-                        btn.disabled = false;
-                        btn.innerText = "KODNI TASDIQLASH";
+                        alert("Kod xato!");
                     }
                 } catch (err) {
-                    alert("Xatolik yuz berdi. Qayta urinib ko'ring.");
+                    alert("Xatolik yuz berdi.");
+                } finally {
                     btn.disabled = false;
                     btn.innerText = "KODNI TASDIQLASH";
                 }
