@@ -234,6 +234,24 @@
                 }
             }
         });
+        // Signin.html ichidagi fetch qismi
+.then(res => res.json())
+.then(data => {
+    if(data.message === "Kod yuborildi") {
+        alert("Kod emailingizga yuborildi!");
+        // Bu yerda OTP oynasiga o'tish kodi bo'ladi
+    } else {
+        alert("Xato: " + data.message);
+        btn.disabled = false; // TUGMANI QAYTA YOQISH
+        btn.innerText = "Ro'yxatdan o'tish";
+    }
+})
+.catch(err => {
+    console.error(err);
+    btn.disabled = false; // TUGMANI QAYTA YOQISH
+    btn.innerText = "Ro'yxatdan o'tish";
+});
     </script>
 </body>
 </html>
+
