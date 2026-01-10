@@ -11,29 +11,28 @@ app.use(express.json());
 let tempStorage = {}; 
 let users = []; 
 
-// Nodemailer sozlamalari - YANGI PAROL BILAN
+// Nodemailer sozlamalari - PORT 587 ga o'zgartirildi (Timeoutni oldini oladi)
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, 
+    port: 587,
+    secure: false, // 587 port uchun shunday bo'lishi shart
     auth: {
         user: 'xabibullayev.azizjon0608@gmail.com',
-        pass: 'zydswmxoetzjompb' // BO'SHLIQLARSIZ YOZILDI
+        pass: 'zydswmxoetzjompb' // Sizning yangi parolingiz
     },
     tls: {
-        rejectUnauthorized: false // Ulanish xatolarini oldini olish uchun
+        rejectUnauthorized: false // Render tarmog'ida bloklanishni oldini oladi
     }
 });
 
-// Server ishlayotganini tekshirish
 app.get('/', (req, res) => {
-    res.send("<h1 style='color:green; text-align:center;'>Yusufkhon Serveri YANGI PAROL BILAN TAYYOR!</h1>");
+    res.send("<h1 style='color:green; text-align:center;'>Yusufkhon Serveri ishlamoqda!</h1>");
 });
 
 // 1. RO'YXATDAN O'TISH
 app.post('/register', async (req, res) => {
     const { email, name, password } = req.body;
-    console.log("Ro'yxatdan o'tish so'rovi:", email);
+    console.log("Ro'yxatdan o'tish so'rovi keldi:", email);
 
     if(!email || !name || !password) {
         return res.status(400).json({ message: "Barcha maydonlarni to'ldiring!" });
@@ -47,18 +46,25 @@ app.post('/register', async (req, res) => {
             from: '"Yusufkhon Corp" <xabibullayev.azizjon0608@gmail.com>',
             to: email,
             subject: 'Tasdiqlash kodi: ' + code,
-            html: `<div style="text-align: center;"><h2>Kodingiz:</h2><h1 style="color: blue;">${code}</h1></div>`
+            html: `
+                <div style="font-family: sans-serif; text-align: center; padding: 20px;">
+                    <h2 style="color: #06b6d4;">Yusufkhon Corporation</h2>
+                    <p>Sizning tasdiqlash kodingiz:</p>
+                    <h1 style="background: #eee; padding: 10px; display: inline-block;">${code}</h1>
+                </div>
+            `
         });
         
-        console.log("Xat yuborildi!");
+        console.log("Xat muvaffaqiyatli yuborildi!");
         res.status(200).json({ message: "Kod yuborildi" });
+
     } catch (error) {
         console.error("Xat yuborishda xato:", error.message);
-        res.status(500).json({ message: "Xatolik: " + error.message });
+        res.status(500).json({ message: "Email yuborishda xatolik: " + error.message });
     }
 });
 
-// 2. KODNI TASDIQLASH
+// 2. KODNI TASDIQLASH (OTP VERIFY)
 app.post('/verify-otp', (req, res) => {
     const { email, otp } = req.body;
     const userData = tempStorage[email];
@@ -68,11 +74,11 @@ app.post('/verify-otp', (req, res) => {
         delete tempStorage[email];
         res.status(200).json({ message: "Muvaffaqiyatli tasdiqlandi!" });
     } else {
-        res.status(400).json({ message: "Kod xato!" });
+        res.status(400).json({ message: "Tasdiqlash kodi xato!" });
     }
 });
 
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-    console.log(`Server ${PORT}-portda ishga tushdi`);
+    console.log(`Server ${PORT}-portda tayyor`);
 });
