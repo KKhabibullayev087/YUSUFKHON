@@ -1,11 +1,11 @@
 const express = require('express');
-const cors = require('cors'); // CORS-ni ulaymiz
+const cors = require('cors');
 const nodemailer = require('nodemailer');
 
 const app = express();
 
 // --- SOZLAMALAR ---
-app.use(cors()); // BU JUDA MUHIM: Brauzer bloklamasligi uchun
+app.use(cors()); // BU JUDA MUHIM: Saytingiz serverga ulanishi uchun ruxsat beradi
 app.use(express.json());
 
 let tempStorage = {}; 
@@ -18,12 +18,12 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// Asosiy sahifa (Brauzerda tekshirish uchun)
+// Brauzerda tekshirish uchun (image_625d09.png o'rniga chiqadi)
 app.get('/', (req, res) => {
-    res.send("<h1>Yusufkhon Corporation Serveri ishlamoqda!</h1>");
+    res.send("<h1 style='color:blue; text-align:center;'>Yusufkhon Corporation Serveri muvaffaqiyatli ishga tushdi!</h1>");
 });
 
-// Ro'yxatdan o'tish (Frontend /register deb so'raydi)
+// Ro'yxatdan o'tish yo'nalishi
 app.post('/register', async (req, res) => {
     const { email, name, password } = req.body;
     const code = Math.floor(100000 + Math.random() * 900000);
@@ -43,4 +43,4 @@ app.post('/register', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server ${PORT}-portda yondi`));
+app.listen(PORT, () => console.log(`Server ${PORT}-portda tayyor`));
